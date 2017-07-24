@@ -1,0 +1,940 @@
+Pythons one sight notes:
+
+1. Script Mode Programming
+	a. save file with .py extension
+	b. execute program from command prompt: python test.py
+
+2. Python Identifiers
+Here are naming conventions for Python identifiers
+	a. Class names start with an uppercase letter.
+	b. Starting an identifier with a single leading underscore indicates that the identifier is private.
+	c. Starting an identifier with two leading underscores indicates a strongly private identifier.
+	d. If the identifier also ends with two trailing underscores, the identifier is a language-defined special name.
+
+3. Multi-Line Statements: \
+EX:
+total = item_one + \
+        item_two + \
+        item_three
+Statements contained within the [], {}, or () brackets, not require to use \.
+days = [monday, tuesday,
+       sunday]
+	   
+4.Quotation in Python
+Python accepts single ('), double (") and triple (''' or """) quotes to denote string literals
+EX:
+word = 'word'
+sentence = "This is a sentence."
+paragraph = """This is a paragraph. It is
+made up of multiple lines and sentences."""
+
+5. Comments in Python
+A hash sign (#) that is not inside a string literal begins a comment.
+EX: 
+# First comment
+
+6. Multiple Statements on a Single Line
+	The semicolon ( ; ) allows multiple statements on the single line.
+import sys; x = 'foo'; sys.stdout.write(x + '\n')
+
+7. Multiple Statement Groups as Suites (:)
+Header lines begin the statement (with the keyword) and terminate with a colon ( : ) and are followed by one or more lines which make up the suite.
+
+8. Assigning Values to Variables
+EX
+counter = 100          # An integer assignment
+miles   = 1000.0       # A floating point
+name    = "John"       # A string
+
+9. Multiple Assignment
+EX:
+a = b = c = 1
+a,b,c = 1,2,"john"
+
+9. Standard Data Types
+Python has five standard data types −
+
+Numbers
+
+String
+
+List
+
+Tuple
+
+Dictionary
+
+10. Python Numbers
+	Number objects are created when you assign a value to them. For example −
+EX:
+var1 = 1
+var2 = 10
+	del statement: del var1[,var2[,var3[....,varN]]]]
+	EX:del var
+	   del var_a, var_b
+	   
+Python supports four different numerical types −
+
+int (signed integers)
+
+long (long integers, they can also be represented in octal and hexadecimal)
+
+float (floating point real values)
+
+complex (complex numbers)
+
+
+11. Python Strings:
+str = 'Hello World!'
+print str          # Prints complete string
+print str[0]       # Prints first character of the string
+print str[2:5]     # Prints characters starting from 3rd to 5th
+print str[2:]      # Prints string starting from 3rd character
+print str * 2      # Prints string two times
+print str + "TEST" # Prints concatenated string
+
+Updating Strings:
+var1 = 'Hello World!'
+print "Updated String :- ", var1[:6] + 'Python'
+
+Triple Quotes:
+The syntax for triple quotes consists of three consecutive single or double quotes.
+EX:
+para_str = """this is a long string that is made up of
+several lines and non-printable characters such as """
+print para_str
+
+Raw strings:
+Raw strings do not treat the backslash as a special character at all. Every character you put into a raw string stays the way you wrote it.
+
+print r'C:\\nowhere'
+O/P: C:\\nowhere
+
+Unicode String: Normal strings in Python are stored internally as 8-bit ASCII, while Unicode strings are stored as 16-bit Unicode.
+print u'Hello, world!'
+
+12.	Python Lists: A list contains items separated by commas and enclosed within square brackets ([]).
+EX:
+#!/usr/bin/python
+
+list = ['abcd', 786 , 2.23, 'john', 70.2]
+tinylist = [123, 'john']
+
+print list          # Prints complete list
+print list[0]       # Prints first element of the list
+print list[1:3]     # Prints elements starting from 2nd till 3rd 
+print list[2:]      # Prints elements starting from 3rd element
+print tinylist * 2  # Prints list two times
+print list + tinylist # Prints concatenated lists
+
+Delete List Elements:
+list = ['physics', 'chemistry', 1997, 2000];
+del list1[2];
+
+Python Expression		Results				Description
+len([1, 2, 3])			3					Length
+[1, 2, 3] + [4, 5, 6]	[1, 2, 3, 4, 5, 6]	Concatenation
+['Hi!'] * 4				['Hi!', 'Hi!', 'Hi!', 'Hi!']	Repetition
+3 in [1, 2, 3]			True				Membership
+for x in [1, 2, 3]: print x,	1 2 3		Iteration
+
+
+List functions.
+1. cmp(list1, list2)  	# compare's elements of two list.
+2. len (list1) 			# Give total length of list.
+3. max (list1)			# Gives max value from list.
+4. min (list1)			# Gives min value from list.
+5. list (tuple_list)	# converts tuple into list.
+
+Methods with List:
+1. list.append(obj): obj object to be added or appended in the list.
+2. list.count(obj): This method returns count of how many times obj occurs in list.
+3. list.extend(seq): Appends the contents of seq to list, seq should be a list.
+4. list.index(obj): This method returns index of the found object otherwise raise an exception indicating that value does not find.
+5. list.insert(index, obj): Inserts object obj into list at offset index.
+6. list.pop(obj=list[-1]): Removes and returns last object or obj from list.
+7. list.remove(obj): Removes object obj from list
+8. list.reverse(): Reverses objects of list in place.
+9. list.sort([func]): Sorts objects of list, use compare func if given
+
+13. Python Tuples
+similar to the list
+The main differences between lists and tuples are: Lists are enclosed in brackets ( [ ] ) and their elements and size can be changed, while tuples are enclosed in parentheses ( ( ) ) and cannot be updated.
+EX:
+#!/usr/bin/python
+
+tuple = ('abcd', 786 , 2.23, 'john', 70.2)
+tinytuple = (123, 'john')
+
+print tuple           # Prints complete list
+print tuple[0]        # Prints first element of the list
+print tuple[1:3]      # Prints elements starting from 2nd till 3rd 
+print tuple[2:]       # Prints elements starting from 3rd element
+print tinytuple * 2   # Prints list two times
+print tuple + tinytuple # Prints concatenated lists
+
+tup1 = (50,): To write a tuple containing a single value you have to include a comma, even though there is only one value.
+
+Updating Tuples:
+tup3 = tup1 + tup2;
+print tup3
+
+Delete Tuple element.
+del tup;
+
+tuple(seq): This will convert list into tuplle.
+
+Python Dictionary
+Python's dictionaries are kind of hash table type. They work like associative arrays or hashes found in Perl and consist of key-value pairs.
+Dictionaries are enclosed by curly braces ({ }) and values can be assigned and accessed using square braces ([]). Each key is separated from its value by a colon (:), Keys are unique within a dictionary while values may not be.
+
+EX:
+#!/usr/bin/python
+dict = {}
+dict['one'] = "This is one"
+dict[2]     = "This is two"
+tinydict = {'name': 'john','code':6734, 'dept': 'sales'}
+
+print dict['one']       # Prints value for 'one' key
+print dict[2]           # Prints value for 2 key
+print tinydict          # Prints complete dictionary
+print tinydict.keys()   # Prints all the keys
+print tinydict.values() # Prints all the values
+
+
+Delete Dictionary Elements: You can either remove individual dictionary elements or clear the entire contents of a dictionary.
+dict = {'Name': 'Zara', 'Age': 7, 'Class': 'First'}
+	del dict['Name']; # remove entry with key 'Name'
+	dict.clear();     # remove all entries in dict
+	del dict ;        # delete entire dictionary
+
+Keys must be immutable. Which means you can use strings, numbers or tuples as dictionary keys but something like ['key'] is not allowed. 
+EX: dict = {['Name']: 'Zara', 'Age': 7} is not allowed.
+
+type(variable)
+Returns the type of the passed variable. If passed variable is dictionary, then it would return a dictionary type.
+
+Methods with Description:
+dict.clear(): Removes all elements of dictionary dict.
+dict.copy(): Returns a shallow copy of dictionary dict
+dict.fromkeys(): Create a new dictionary with keys from seq and values set to value.
+dict.get(key, default=None): For key key, returns value or default if key not in dictionary.
+dict.has_key(key): Returns true if key in dictionary dict, false otherwise
+dict.s(): Returns a list of dict's (key, value) tuple pairs.
+dict.keys(): Returns list of dictionary dict's keys
+dict.setdefault(key, default=None): Similar to get(), but will set dict[key]=default if key is not already in dict
+dict.update(dict2): Adds dictionary dict2's key-values pairs to dict.
+dict.values(): Returns list of dictionary dict's values.
+
+14. Python Decision Making
+Python Decision Making
+EX
+#!/usr/bin/python
+var = 100
+if ( var  == 100 ) : print "Value of expression is 100"
+
+
+15. Loop Control Statements
+while: Repeats a statement or group of statements while a given condition is TRUE. It tests the condition before executing the loop body.
+for : Executes a sequence of statements multiple times and abbreviates the code that manages the loop variable.
+break: It terminates the current loop and resumes execution at the next statement.
+continue: It returns the control to the beginning of the while loop.. The continue statement rejects all the remaining statements in the current iteration of the loop and moves the control back to the top of the loop.
+
+Defining a Function:
+def functionname( parameters ):
+   "function_docstring"
+   function_suite
+   return [expression]
+
+EX:
+   def printme( str ):
+   "This prints a passed string into this function"
+   print str
+   return
+Calling a Function:
+printme("I'm first call to user defined function!")
+
+Function Arguments:
+You can call a function by using the following types of formal arguments:
+Required arguments: Required arguments are the arguments passed to a function in correct positional order. Here, the number of arguments in the function call should match exactly with the function definition.
+printme()
+When called above function without any arguments it will through below error.
+printme();
+TypeError: printme() takes exactly 1 argument (0 given).
+
+Keyword arguments: Keyword arguments are related to the function calls. When you use keyword arguments in a function call, the caller identifies the arguments by the parameter name.
+EX:
+def printinfo( name, age ):
+
+you should call as printinfo( age=50, name="miki" )
+
+
+Default arguments: A default argument is an argument that assumes a default value if a value is not provided in the function call for that argument.
+def printinfo( name, age = 35 ):
+
+you can called as 
+printinfo( age=50, name="miki" )
+printinfo( name="miki" )
+
+Variable-length arguments: You may need to process a function for more arguments than you specified while defining the function. These arguments are called variable-length arguments and are not named in the function definition, 
+unlike required and default arguments.
+def functionname([formal_args,] *var_args_tuple):
+   "This prints a variable passed arguments"
+   print "Output is: "
+   print arg1
+   for var in vartuple:
+      print var
+   return;
+
+# Now you can call printinfo function
+printinfo( 10 )
+printinfo( 70, 60, 50 )
+Output is:
+10
+Output is:
+70
+60
+50
+
+Anonymous Functions:
+lambda [arg1 [,arg2,.....argn]]:expression
+An anonymous function cannot be a direct call to print because lambda requires an expression.
+Lambda functions have their own local namespace and cannot access variables other than those in their parameter list and those in the global namespace.
+EX: sum = lambda arg1, arg2: arg1 + arg2;
+
+Scope of Variables:
+Global vs. Local variables
+Variables that are defined inside a function body have a local scope, and those defined outside have a global scope.
+This means that local variables can be accessed only inside the function in which they are declared, whereas global variables can be accessed throughout the program body by all functions.
+
+Module
+	A module allows you to logically organize your Python code. 
+	A module can define functions, classes and variables. A module can also include runnable code.
+	A module is loaded only once, regardless of the number of times it is imported. 
+The import Statement:
+		You can use any Python source file as a module by executing an import statement in some other Python source file.
+		EX: import module1[, module2[,... moduleN]
+		#!/usr/bin/python
+
+		# Import module support
+		import support
+		# Now you can call defined function that module as follows
+		support.print_func("Zara")
+The from...import Statement
+	Python's from statement lets you import specific attributes from a module into the current namespace.
+	EX: from fib import fibonacci  (from module_Name import Attribute_Name)
+		This statement does not import the entire module fib into the current namespace; it just introduces the item fibonacci from the module fib.
+
+The from...import * Statement: It is also possible to import all names from a module into the current namespace by using the following import statement −
+	from modname import *
+	
+Locating Modules: Python intepretor searches for the module in following sequences.
+	The current directory.
+	If the module isn't found, Python then searches each directory in the shell variable PYTHONPATH.
+	If all else fails, Python checks the default path. On UNIX, this default path is normally /usr/local/lib/python/.
+	
+The PYTHONPATH Variable: The PYTHONPATH is an environment variable, consisting of a list of directories.
+Windows
+	set PYTHONPATH=c:\python20\lib;
+UNIX:
+	set PYTHONPATH=/usr/local/lib/python
+
+Namespaces and Scoping:
+	Python makes educated guesses on whether variables are local or global. "It assumes that any variable assigned a value in a function is local".
+	Therefore, in order to assign a value to a global variable within a function, you must first use the global statement.
+	The statement "global VarName" tells Python that VarName is a global variable. Python stops searching the local namespace for the variable.
+
+The dir() Function
+	The dir() built-in function returns a sorted list of strings containing the names defined by a module.
+	The list contains the names of all the modules, variables and functions that are defined in a module.
+
+The globals() and locals() Functions:
+	If locals() is called from within a function, it will return all the names that can be accessed locally from that function.
+	If globals() is called from within a function, it will return all the names that can be accessed globally from that function.
+	The return type of both these functions is dictionary. Therefore, names can be extracted using the keys() function.
+
+The reload() Function
+When the module is imported into a script, the code in the top-level portion of a module is executed only once.
+
+Therefore, if you want to reexecute the top-level code in a module, you can use the reload() function.
+	syntax: reload(module_name)
+
+Packages in Python
+	A package is a hierarchical file directory structure that defines a single Python application environment that consists of modules and subpackages and sub-subpackages, and so on.
+	EX: Consider a files Pots.py, Isdn.py, G3.py are available in Phone directory, Now, create one more file __init__.py in Phone directory − Phone/__init__.py
+To make all of your functions available when you've imported Phone, you need to put explicit import statements in __init__.py as follows −
+	from Pots import Pots
+	from Isdn import Isdn
+	from G3 import G3
+After you add these lines to __init__.py, you have all of these classes available when you import the Phone package.
+# Now import your Phone Package.
+import Phone
+
+Phone.Pots()
+Phone.Isdn()
+Phone.G3()
+
+In the above example, we have taken example of a single functions in each file, but you can keep multiple functions in your files.
+
+Python Files I/O
+	Reading Keyboard Input: Python provides two built-in functions to read a line of text from standard input, which by default comes from the keyboard.
+	raw_input: The raw_input([prompt]) function reads one line from standard input and returns it as a string (removing the trailing newline).
+		str = raw_input("Enter your input: ");
+		print "Received input is : ", str
+	input: The input([prompt]) function is equivalent to raw_input, except that it assumes the input is a valid Python expression and returns the evaluated result to you.
+		str = input("Enter your input: ");
+		print "Received input is : ", str
+		
+		This would produce the following result against the entered input −
+		Enter your input: [x*5 for x in range(2,10,2)]
+		Recieved input is :  [10, 20, 30, 40]
+
+Opening and Closing Files:
+The open Function
+Before you can read or write a file, you have to open it using Python's built-in open() function. 
+Syntax: file object = open(file_name [, access_mode][, buffering])
+
+w+	Opens a file for both writing and reading. Overwrites the existing file if the file exists. If the file does not exist, creates a new file for reading and writing.
+a	Opens a file for appending. The file pointer is at the end of the file if the file exists. 
+ab	Opens a file for appending in binary format. The file pointer is at the end of the file if the file exists. 
+a+	Opens a file for both appending and reading. The file pointer is at the end of the file if the file exists. 
+ab+	Opens a file for both appending and reading in binary format. The file pointer is at the end of the file if the file exists.
+
+The file Object Attributes
+Attribute			Description
+file.closed			Returns true if file is closed, false otherwise.
+file.mode			Returns access mode with which file was opened.
+file.name			Returns name of the file.
+file.softspace		Returns false if space explicitly required with print, true otherwise.
+
+The close() Method
+	The close() method of a file object flushes any unwritten information and closes the file object, after which no more writing can be done.
+Syntax: fileObject.close();	
+
+Reading and Writing Files:
+The write() Method
+	The write() method writes any string to an open file. It is important to note that Python strings can have binary data and not just text.
+	The write() method does not add a newline character ('\n') to the end of the string.
+	Syntax:
+	fileObject.write(string);
+writelines(lines_of_text) 
+	To write multiple lines to a file at once
+	
+The read() Method
+	The read() method reads a string from an open file. It is important to note that Python strings can have binary data. apart from text data, its like equals to "cat file.txt".
+	Syntax:
+	fileObject.read([count]);
+	This method starts reading from the beginning of the file and if count is missing, then it tries to read as much as possible, maybe until the end of file.
+readline():
+	If you want to read a file line by line readline() function.
+readlines()
+	To read a list of lines in a text file: 
+	
+
+With Statement
+	You can also work with file objects using the with statement.
+	It is designed to provide much cleaner syntax and exceptions handling when you are working with code.
+	One bonus of using this method is that any files opened will be closed automatically after you are done. This leaves less to worry about during cleanup. 
+
+with open(“testfile.txt”) as file:  
+data = file.read() 
+do something with data 
+
+split()
+	This function split the data based on the space.
+	If you wanted to use a colon instead of a space to split your text, you would simply change line.split() to line.split(“:”).
+Example:
+with open(“hello.text”, “r”) as f:
+data = f.readlines()
+for line in data:
+words = line.split()
+print words
+
+	
+File Positions
+	The tell() method tells you the current position within the file; in other words, the next read or write will occur at that many bytes from the beginning of the file.
+	The seek(offset[, from]) method changes the current file position. The offset argument indicates the number of bytes to be moved.
+	The from argument specifies the reference position from where the bytes are to be moved.
+
+Renaming and Deleting Files
+	Python os module provides methods that help you perform file-processing operations, such as renaming and deleting files.
+	To use this module you need to import it first and then you can call any related functions.
+
+The rename() Method
+	The rename() method takes two arguments, the current filename and the new filename.
+	Syntax
+	os.rename(current_file_name, new_file_name)
+
+The remove() Method
+	You can use the remove() method to delete files by supplying the name of the file to be deleted as the argument.
+	Syntax
+	os.remove(file_name)
+
+The chdir() Method
+	You can use the chdir() method to change the current directory. The chdir() method takes an argument, which is the name of the directory that you want to make the current directory.
+	Syntax
+	os.chdir("newdir")  EX: os.chdir("/home/newdir")
+
+The getcwd() Method
+	The getcwd() method displays the current working directory.
+	Syntax
+	os.getcwd()	
+	
+The rmdir() Method
+	The rmdir() method deletes the directory
+	Syntax:
+	os.rmdir('dirname') EX: os.rmdir("/tmp/test")
+	
+
+Overview of OOP Terminology:
+	
+Class:
+	A class is prototype for an object, that defines a set of attributes, attributes can be variable,strings, data members (class variables and instance variables) and methods accessed via dot notation.
+	
+	Class variable: A class variable that is shared by all instances of a class (i.e shared with a class).Class variables are defined within a class but outside any of the class's methods.
+					Class variables are not used as frequently as instance variables are.
+					
+	Data member: A class variable or instance variable that holds data associated with a class and its objects.
+	
+	Function overloading: The assigment of more than one behavior to a particular function. Operation performed by function varies by the types of objects or arguments involved.
+	overloading often make code cleaner, because you don't pack the method with too many if-else statement to handle different cases.
+	
+	Instance Variable: A variable that is defined inside a method and belongs only to current instance of a class.
+	
+	Inheritance: The transfer of characteristics of a class to other classed that are derived from it.
+	
+	Instance: An individual object of certain class.
+	EX: Here object obj is an instance of class Circle.
+		object obj = class Circle
+	
+	Object: A unique instance of a data structure that's defined by its class. An object comprises of both data members(class variables and instance variables) and method.
+	
+Creating class:
+	class ClassName:
+	    'optional class documentation string'
+		class_suite
+	The class has a documentation string, which can be accessed via ClassName.__doc__.
+	The class_suite consists of all the component statements defining class members, data attributes and functions.
+
+class Employee:
+    empCount=0 #The variable empCount is a class variable whose value is shared among all instances of a this class.
+
+# The first method __init__ is a special method, which is called class constructor or initialization method that python calls when you create a new instance of this class.
+	def __init__(self, name, salary):
+	    self.name = name
+		self.salary = salary
+		Employee.empCount += 1
+# You declare other class methods like normal functions with the exception that the first argument to each method is self.
+python adds self argument to the list for you, you need not to include it when you call methods.		
+    def displayCount(self):
+	    print "Total Employee %d" % Employee.empCount
+	
+	def displayEmployee(self):
+	    print "Name: ", self.name, "Salary: ", self.salary
+
+Creating Instance Objects
+	To create instances of a class, you call the class using class name and pass in whatever arguments its __init__ method accepts.
+	emp1 = Employee("Zara", 1000)
+	
+Accessing Attributes: 
+You can access the object's attributes using dot operator with object. Class variable would be accessed using class name.
+emp1.displayEmployee()
+print "Total Employee %d" %s Employee.empCount
+
+You can add, remove, or modify attributes of classes and objects at any time −
+emp1.age = 7  # Add an 'age' attribute.
+emp1.age = 8  # Modify 'age' attribute.
+del emp1.age  # Delete 'age' attribute.
+
+Instead of using the normal statements to access attributes, you can use the following functions −
+	hasattr(obj, name): hasattr(emp1, 'aga') 	# Returns true if 'aga' attribute exists
+	getattr(obj, name[,default]): 				#Returns value of 'age' attribute
+	setattr(obj, name, value): 					#Set attribute 'age' at 8
+	delattr(obj, name):							#Delete attribute 'age'
+	
+Built-In Class Attributes:
+print "Employee.__doc__:", Employee.__doc__ 		# Prints class documentation string
+print "Employee.__name__:", Employee.__name__ 		# Class name.
+print "Employee.__module__:", Employee.__module__	# Module name in which class is defined.
+print "Employee.__bases__:", Employee.__bases__		# Tuple containing base class, in the order of their occurrence in the base class list.
+print "Employee.__dict__:", Employee.__dict__ 		# Dictionary containing the class's namespace.
+
+When the above code is executed, it produces the following result −
+
+Employee.__doc__: Common base class for all employees
+Employee.__name__: Employee
+Employee.__module__: __main__
+Employee.__bases__: ()
+Employee.__dict__: {'__module__': '__main__', 'displayCount':<function displayCount at 0xb7c84994>, 'empCount': 2, 
+'displayEmployee': <function displayEmployee at 0xb7c8441c>, '__doc__': 'Common base class for all employees', 
+'__init__': <function __init__ at 0xb7c846bc>}
+
+
+Destroying Objects (Garbage Collection):
+	Python deletes unneeded objects (built-in types or class instances) automatically to free the memory space. 
+	Python's garbage collector runs during program execution and is triggered when an object's reference count reaches zero.
+	An object's reference count increases when it is assigned a new name or placed in a container (list, tuple, or dictionary). The object's reference count decreases when it's deleted with del, its reference is reassigned, or its reference goes out of scope.
+EX:
+a = 40      # Create object <40>
+b = a       # Increase ref. count  of <40> 
+c = [b]     # Increase ref. count  of <40> 
+
+del a       # Decrease ref. count  of <40>
+b = 100     # Decrease ref. count  of <40> 
+c[0] = -1   # Decrease ref. count  of <40> 
+
+Static Variable and Instance Variable.
+class MyClass:
+    i = 3
+print MyClass.i  #Example of static variable.
+O/P 3
+MyClass.i = 6 # to change the static variable we do it by assigning to the class
+
+m=MyClass()
+print m.i O/P is 3 #m.i static variable accessed via instance
+m.i=4	#Example of Instance variable.
+print m.i
+O/P: 4 
+	
+Class Inheritance:
+	Instead of starting from scratch, you can create a class by deriving it from a preexisting class by listing the parent class in parentheses after the new class name.
+	The child class inherits the attributes of its parent class, and you can use those attributes as if they were defined in the child class. A child class can also override data members and methods from the parent.
+
+Syntax
+class SubClassName (ParentClass1[, ParentClass2, ...]):
+   'Optional class documentation string'
+   class_suite
+
+Example
+#!/usr/bin/python
+
+class Parent:        # define parent class
+   parentAttr = 100
+   def __init__(self):
+      print "Calling parent constructor"
+
+   def parentMethod(self):
+      print 'Calling parent method'
+
+   def setAttr(self, attr):
+      Parent.parentAttr = attr
+
+   def getAttr(self):
+      print "Parent attribute :", Parent.parentAttr
+
+class Child(Parent): # define child class
+   def __init__(self):
+      print "Calling child constructor"
+
+   def childMethod(self):
+      print 'Calling child method'
+
+c = Child()          # instance of child
+c.childMethod()      # child calls its method
+c.parentMethod()     # calls parent's method
+c.setAttr(200)       # again call parent's method
+c.getAttr()          # again call parent's method   
+
+You can use issubclass() or isinstance() functions to check a relationships of two classes and instances.
+	The issubclass(sub, sup) boolean function returns true if the given subclass sub is indeed a subclass of the superclass sup.
+	The isinstance(obj, Class) boolean function returns true if obj is an instance of class Class or is an instance of a subclass of Class.	
+
+Overriding Methods
+You can always override your parent class methods. One reason for overriding parent's methods is because you may want special or different functionality in your subclass.
+
+Example
+#!/usr/bin/python
+
+class Parent:        # define parent class
+   def myMethod(self):
+      print 'Calling parent method'
+
+class Child(Parent): # define child class
+   def myMethod(self):
+      print 'Calling child method'
+
+c = Child()          # instance of child
+c.myMethod()         # child calls overridden method
+When the above code is executed, it produces the following result −
+Calling child method
+
+Function overloading: The assigment of more than one behavior to a particular function. Operation performed by function varies by the types of objects or arguments involved.
+	overloading often make code cleaner, because you don't pack the method with too many if-else statement to handle different cases.
+class A(object):  # Remember the ``object`` bit when working in Python 2.x
+
+    def stackoverflow(self, i=None):
+        if i is None:
+            print 'first form'
+        else:
+            print 'second form'
+As you can see, you can use this to trigger separate behaviour rather than merely having a default value.
+
+>>> ob = A()
+>>> ob.stackoverflow()
+first form
+>>> ob.stackoverflow(2)
+second form
+
+In Python, everything is an object. Classes are things, so they are objects. So are methods.
+There is an object called A which is a class. It has an attribute called stackoverflow. It can only have one such attribute.
+When you write def stackoverflow(...): ..., what happens is that you create an object which is the method, and assign it to the stackoverflow attribute of A. 
+If you write two definitions, the second one replaces the first, the same way that assignment always behaves.
+
+Data Hiding
+	An object's attributes may or may not be visible outside the class definition. You need to name attributes with a double underscore prefix, and those attributes then are not be directly visible to outsiders.
+Example
+#!/usr/bin/python
+
+class JustCounter:
+   __secretCount = 0
+  
+   def count(self):
+      self.__secretCount += 1
+      print self.__secretCount
+
+counter = JustCounter()
+counter.count()
+counter.count()
+print counter.__secretCount
+When the above code is executed, it produces the following result −
+
+1
+2
+Traceback (most recent call last):
+  File "test.py", line 12, in <module>
+    print counter.__secretCount
+AttributeError: JustCounter instance has no attribute '__secretCount'
+
+Python protects those members by internally changing the name to include the class name. You can access such attributes as object._className__attrName. If you would replace your last line as following, then it works for you −
+.........................
+print counter._JustCounter__secretCount
+
+__import__
+	Direct use of __import__() is rare, except in cases where you want to import a module whose name is only known at runtime.
+
+	
+import argparse
+
+#add argument
+parser1=argparse.ArgumentParser(description='Optional app description')
+#Required positional argument
+parser1.add_argument('pos_arg', type=int, help='A required integer positional argument')
+#Optional positional argument.
+parser1.add_argument('opt_pos_arg', type=int, help='An optional integer positional argument')
+#Optional argument
+parser1.add_argument('--opt_arg',type=int, help='An optional integer argument')
+#switch
+parser1.add_argument('--switch', action="store", help='A boolean switch')
+
+#parse
+arg=parser1.parse_args()
+
+#access
+print ("Argument Values")
+print (arg.pos_arg)
+print (arg.opt_pos_arg)
+print (arg.opt_arg)
+print (arg.switch)
+
+#check values
+if arg.pos_arg > 10:
+    parse.error("pos_arg cannot be larger than 10")	
+
+#Run code.
+./prog.py 1 2 --opt_arg 3 --switch
+
+Subprocess:
+The subprocess module allows you to spawn new processes, connect to their input/output/error pipes, and obtain their return codes.
+Subprocess can be used for accessing system commands.
+
+Example:
+subprocess.call(): Run the command describe by args.
+We can run command line with arguments passed as a list of strings (Ex1) or by setting shell argument to true (Ex2)
+
+Ex1: subprocess.call(['ls'],'-l')
+
+Ex2: subprocess.call('du -hs $HOME', shell=True)
+
+Input and Output
+With subprocess you can suppress the output, which is very handy when you want to run a system call but are not interested about the standard output. 
+
+subprocess.Popen()
+	The underlying process creation and management in the subprocess module is handled by the Popen class. 
+	subprocess.Popen takes a list of arguments.
+
+If you know that you will only work with specific subprocess functions,
+such as Popen and PIPE, then it is enough to only import those.
+
+from subprocess Popen, PIPE
+#Popen is like open a pipe to give command, and communicate is used to execute given command in Popen.
+p1.Popen(["dmesg'], stdout=PIPI)
+p1.communicate()
+
+Popen.communicate()
+	The communicate() method returns a tuple (stdoutdata, stderrdata). 
+	Basically, when you use communicate() it means that you want to execute the command
+	Read data from stdout and stderr, until end-of-file is reached.
+	Wait for process to terminate.
+
+subprocess.PIPE : pipe to the standard stream should be opened.
+Special value that can be used as the stdin, stdout or stderr argument to Popen and indicates that a pipe to the standard stream should be opened.
+
+subprocess.STDOUT
+Special value that can be used as the stderr argument to Popen and indicates that standard error should go into the same handle as standard output.
+
+subprocess.CalledProcessError
+Exception raised when a process run by check_call() or check_output() returns a non-zero exit status.
+
+
+Regular Expressions:
+	Regular expressions (called REs, or regexes, or regex patterns) are essentially a tiny, highly specialized programming language embedded inside Python and made available through the re module. 
+	Most letters and characters will simply match themselves. For example, the regular expression test will match the string test exactly.
+	There are exceptions to this rule; some characters are special metacharacters, and don’t match themselves. 
+Metacharacters:
+. ^ $ * + ? { } [ ] \ | ( )
+
+[]
+	[] used for specifying a character class, which is a set of characters that you wish to match. 
+	Characters can be listed individually, or a range of characters can be indicated by giving two characters and separating them by a '-'. For example, [abc] will match any of the characters a, b, or c; this is the same as [a-c]
+	Metacharacters are not active inside classes. For example, [akm$] will match any of the characters 'a', 'k', 'm', or '$'; '$' is usually a metacharacter, but inside a character class it’s stripped of its special nature.
+	backslash, \ used to escape all the metacharacters so you can still match them in patterns. Ex:  \[ or \\
+
+Some of the special sequences beginning with '\' represent predefined sets of characters that are often useful
+Ex:
+\d or [0-9] matches any digit
+\D or [^0-9] matches any non-digit
+\w or [a-zA-Z] matches any alphanumeric character.
+\W or [^a-zA-Z] matches any non-alphanumeric character.
+\s or [ \t\n\r\f\v] matches any whitespace character.
+\S or [^ \t\n\r\f\v] matches any non-whitespace character.
+\A	Matches only at the start of the string.
+\Z	Matches only at the end of the string.
+
+For example, [\s,.] is a character class that will match any whitespace character, or ',' or '.'
+
+Specail characters are
+.(Dot.) this matches any character except a newline.
+^	Matches the start of the string
+$	Matches the end of the string
+*	Causes the resulting RE to match 0 or more repetitions of the preceding RE, as many repetitions as are possible. ab* will match ‘a’, ‘ab’, or ‘a’ followed by any number of ‘b’s.
++	Causes the resulting RE to match 1 or more repetitions of the preceding RE. ab+ will match ‘a’ followed by any non-zero number of ‘b’s; it will not match just ‘a’.
+?	Causes the resulting RE to match 0 or 1 repetitions of the preceding RE. ab? will match either ‘a’ or ‘ab’.
+*?, +?, ??
+	The '*', '+', and '?' qualifiers are all greedy; they match as much text as possible. Sometimes this behaviour isn’t desired; if the RE <.*> is matched against <a> b <c>, it will match the entire string, and not just <a>. 
+	Adding ? after the qualifier makes it perform the match in non-greedy or minimal fashion; as few characters as possible will be matched. Using the RE <.*?> will match only <a>.
+{m}	Specifies that exactly m copies of the previous RE should be matched a{6} will match exactly six 'a' characters, but not five.
+{m,n}
+Causes the resulting RE to match from m to n repetitions of the preceding RE, attempting to match as many repetitions as possible.
+For example, a{3,5} will match from 3 to 5 'a' characters.
+ 
+{m,n}?	Causes the resulting RE to match from m to n repetitions of the preceding RE, attempting to match as few repetitions as possible.
+	This is the non-greedy version of the previous qualifier. For example, on the 6-character string 'aaaaaa', a{3,5} will match 5 'a' characters, while a{3,5}? will only match 3 characters.
+\
+Either escapes special characters (permitting you to match characters like '*', '?', and so forth)
+|
+A|B, where A and B can be arbitrary REs, creates a regular expression that will match either A or B.
+
+Grouping
+(...)	Matches whatever regular expression is inside the parentheses, and indicates the start and end of a group; the contents of a group can be retrieved after a match has been performed, and can be matched later in the string with the \number special sequence, described below. 
+
+(?...)	This is an extension notation. The first character after the '?' determines what the meaning and further syntax of the construct is. Extensions usually do not create a new group; (?P<name>...) is the only exception to this rule. 
+
+(?aiLmsux)
+(One or more letters from the set 'a', 'i', 'L', 'm', 's', 'u', 'x'.) The group matches the empty string;
+The letters set the corresponding flags: re.A (ASCII-only matching), re.I (ignore case), re.L (locale dependent), re.M (multi-line), re.S (dot matches all), and re.X (verbose), for the entire regular expression.
+This is useful if you wish to include the flags as part of the regular expression, instead of passing a flag argument to the re.compile() function. Flags should be used first in the expression string.
+(?P<name>...)
+Similar to regular parentheses, but the substring matched by the group is accessible via the symbolic group name name. Group names must be valid Python identifiers, and each group name must be defined only once within a regular expression.  A symbolic group is also a numbered group, just as if the group were not named.
+(?P=name)
+A backreference to a named group; it matches whatever text was matched by the earlier group named name.
+(?#...)
+A comment; the contents of the parentheses are simply ignored.
+(?=...)
+Matches if ... matches next, but doesn’t consume any of the string. This is called a lookahead assertion. For example, Isaac (?=Asimov) will match 'Isaac ' only if it’s followed by 'Asimov'.
+(?!...)
+Matches if ... doesn’t match next. This is a negative lookahead assertion. For example, Isaac (?!Asimov) will match 'Isaac ' only if it’s not followed by 'Asimov'.
+(?<=...)
+Matches if the current position in the string is preceded by a match for ... that ends at the current position. This is called a positive lookbehind assertion. (?<=abc)def will find a match in abcdef
+
+
+Module Contents:
+re.compile(pattern, flags=0)
+Compile a regular expression pattern into a regular expression object, which can be used for matching using its match() and search() methods
+
+prog = re.compile(pattern)
+result=prog.match(string)
+
+above is equal to 
+result=re.match(pattern, string)
+
+but using re.compile() and saving the resulting regular expression object for reuse is more efficient when the expression will be used several times in a single program.
+
+re.search(pattern, string, flags=0)
+Scan through string looking for the first location where the regular expression pattern produces a match, and return a corresponding match object. 
+
+re.match(pattern, string, flags=0)
+If zero or more characters at the beginning of string match the regular expression pattern, return a corresponding match object.
+
+re.fullmatch(pattern, string, flags=0)
+If the whole string matches the regular expression pattern, return a corresponding match object.
+
+re.split(pattern, string, maxsplit=0, flags=0)
+Split string by the occurrences of pattern. 
+re.split('[a-f]+', '0a3B9',flags=re.IGNORECASE)
+O/P: ['0','3','9']
+
+re.findall(pattern, string, flags=0)
+Return all non-overlapping matches of pattern in string, as a list of strings. 
+re.findall('[a-f]+', '0a3B9',flags=re.IGNORECASE)
+['a', 'B']
+
+
+>>> m = re.match(r"(\w+) (\w+)", "Isaac Newton, physicist")
+>>> m.group(0)       # The entire match
+'Isaac Newton'
+>>> m.group(1)       # The first parenthesized subgroup.
+'Isaac'
+>>> m.group(2)       # The second parenthesized subgroup.
+'Newton'
+>>> m.group(1, 2)    # Multiple arguments give us a tuple.
+('Isaac', 'Newton')
+
+>>> m.group('first_name')
+'Malcolm'
+>>> m.group('last_name')
+'Reynolds'
+Named groups can also be referred to by their index:
+
+>>>
+>>> m.group(1)
+'Malcolm'
+>>> m.group(2)
+'Reynolds'
+If a group matches multiple times, only the last match is accessible:
+
+>>>
+>>> m = re.match(r"(..)+", "a1b2c3")  # Matches 3 times.
+>>> m.group(1)                        # Returns only the last match.
+'c3'
+
+findall() matches all occurrences of a pattern
+>>> text = "He was carefully disguised but captured quickly by police."
+>>> re.findall(r"\w+ly", text)
+['carefully', 'quickly']
+
+
+Things to learn:
+
+parse_args()
+popen
+popen3
+subprocess
+urllib
+lib2
+sleep
+mysql
+import xml
+fromhtml
+__import__
+__future__
+__doc__

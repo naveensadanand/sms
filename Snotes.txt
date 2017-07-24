@@ -1,0 +1,244 @@
+AWK Command:
+Awk is one of the most powerful tools in Unix used for processing the rows and columns in a file.
+Syntax: awk 'BEGIN {start_action} {action} END {stop_action}' filename
+
+1. awk '{print $1}' input_file
+Here $1 has a meaning. $1, $2, $3... represents the first, second, third columns... in a row respectively. This awk command will print the first column in each row.
+$0 will print entire line.
+
+2. awk 'BEGIN {SUM=0} {SUM=SUM+$5} END {print $5}' input_file
+There are few points to observe.
+1. In the Begin block the variable sum is assigned with value 0.
+2. In the next block the value of 5th column is added to the sum variable. This addition of the 5th column to the sum variable repeats for every row it processed. 
+3. When all the rows are processed the sum variable will hold the sum of the values in the 5th column
+4. This value is printed in the End block.
+
+3. In this example we will see how to execute the awk script written in a file. Create a file sum_column and paste the below script in that file
+
+#!/usr/bin/awk -f
+BEGIN {sum=0} 
+{sum=sum+$5} 
+END {print sum}
+
+Now execute the the script using awk command as 
+awk -f sum_column input_file.
+
+4.  awk '{ if($9 == "t4") print $0;}' input_file
+This awk command checks for the string "t4" in the 9th column and if it finds a match then it will print the entire line. 
+
+5. awk 'BEGIN { for(i=1;i<=5;i++) print "square of", i, "is",i*i; }'
+
+This will print the squares of first numbers from 1 to 5.
+
+AWK Built in Variables:
+FS - Input field separator variable: 
+By default Awk assumes that fields in a file are separted by space characters. If the fields in the file are separted by any other character, we can use the FS variable to tell about the delimiter. 
+
+6. awk 'BEGIN {FS=":"} {print $2}' input_file
+OR
+awk -F: '{print $2}' input_file
+
+OFS - Output field separator variable: 
+By default using print statement the fields are displayed with space character as delimiter.
+We can change this default behavior using the OFS variable as
+awk 'BEGIN {OFS=":"} {print $4,$5}' input_file
+center:0
+center:17
+center:26
+center:25
+center:43
+Note: print $4,$5 and print $4$5 will not work the same way. The first one displays the output with space as delimiter. The second one displays the output without any delimiter. 
+
+NF - Number of fileds variable:
+8. awk '{print NF}' input_file
+This will display the number of columns in each row.
+
+NR - number of records variable: 
+9. awk '{print NR}' input_file
+This will display the line numbers from 1.
+
+10. awk 'END {print NR}' input_file
+This will display the total number of lines in the file.
+
+String functions in Awk:
+Some of the string functions in awk are:
+index(string,search)
+length(string)
+split(string,array,separator)
+substr(string,position)
+substr(string,position,max)
+tolower(string)
+toupper(string)
+
+
+SED: Sed is a stream Editor used for modifying files in unix. 
+>cat file.txt
+unix is great os. unix is opensource. unix is free os.
+learn operating system.
+unixlinux which one you choose.
+
+1. Replacing or substituting string: Sed command is mostly used to replace the text in a file.
+sed 's/unix/linux/' file.txt
+linux is great os. unix is opensource. unix is free os.
+learn operating system.
+linuxlinux which one you choose.
+
+Here the "s" specifies the substitution operation. The "/" are delimiters. The "unix" is the search pattern and the "linux" is the replacement string.
+
+2. Replacing the nth occurrence of a pattern in a line.
+Use the /1, /2 etc flags to replace the first, second occurrence of a pattern in a line.
+>sed 's/unix/linux/2' file.txt
+
+3. Replacing all the occurrence of the pattern in a line.
+The substitute flag /g (global replacement) specifies the sed command to replace all the occurrences of the string in the line.
+
+4. Replacing from nth occurrence to all occurrences in a line.
+Use the combination of /1, /2 etc and /g to replace all the patterns from the nth occurrence of a pattern in a line.
+sed 's/unix/linux/3g' file.txt
+
+5. Changing the slash (/) delimiter
+>sed 's/http:\/\//www/' file.txt
+Using too many backslashes makes the sed command look awkward. In this case we can change the delimiter to another character as shown in the below example.
+
+>sed 's_http://_www_' file.txt
+>sed 's|http://|www|' file.txt
+
+6. Using & as the matched string: There might be cases where you want to search for the pattern and replace that pattern by adding some extra characters to it. In such cases & comes in handy. The & represents the matched string.
+>sed 's/unix/{&}/' file.txt
+
+7. Using \1,\2 and so on to \9
+The first pair of parenthesis specified in the pattern represents the \1, the second represents the \2 and so on.
+sed 's/\(unix\)/\1\1/' file.txt
+
+8. Duplicating the replaced line with /p flag
+>sed 's/unix/linux/p' file.txt
+The /p print flag prints the replaced line twice on the terminal. 
+
+9. Printing only the replaced lines
+Use the -n option along with the /p print flag to display only the replaced lines.
+>sed -n 's/unix/linux/p' file.txt
+
+10. Running multiple sed commands.
+>sed 's/unix/linux/' file.txt| sed 's/os/system/'
+
+11. Replacing string on a specific line number.
+sed '3 s/unix/linux/' file.txt
+>sed '1,3 s/unix/linux/' file.txt  (Replacing string on a range of lines.)
+
+17. Add a line after a match.
+The sed command can add a new line after a pattern match is found. The "a" command to sed tells it to add a new line after a match is found.
+sed '/unix/ a "add a new line" file.txt
+
+18. Add a line before a match
+sed '/unix/ i "add a new line before match" file.txt
+
+19. change a line
+sed '/unix/ c "change line" file.txt
+
+20. Transform like tr command
+The sed command can be used to convert lower case letters to upper case letters by using transform y option.
+>sed 'y/ul/UL/' file.txt
+
+
+
+
+Find:
+Find command is used for searching the files in a directory hierarchy.
+
+1. find -name "sum.java" or find -iname "sum.java" (-i will ignore the case).
+This will find all the files with name "sum.java" in the current directory and sub-directories.
+
+2. find -maxdepth 1 -name "sum.java"
+This will find for the file "sum.java" in the current directory only
+
+3. find -name "*java*"
+It displayed all the files which have the word "java" in the filename
+
+4. find /etc -name "*java*" (This command will find files in specific directory here its /etc)
+This will look for the files in the /etc directory with "java" in the filename
+
+5.find -not -name "sum.java"
+This is like inverting the match. It prints all the files except the given file "sum.java".
+
+6. find -maxdepth 2 -name "sum.java"
+ To print the files in the current directory and one level down to the current directory
+ 
+7. find -mindepth 2 -maxdepth 5 -name "sum.java"
+To print the files in the subdirectories between level 1 and 4
+
+8. To find the largest file in the current directory and sub directories
+	find . -type f -exec ls -s {}\; | sort -n -r | head -1
+	"find . -type f -exec ls -s {} \;": This command will list all files along with size of file.
+	sort command will sort files based on the size.
+	head command will pick only first line from output of sort.
+
+9. To find the smallest file in the current directory and sub directories
+    find . -type f -exec ls -l {} \;| sort -n -r | tail -1
+
+10. How to find files based on the file type.
+	find . -type s (Finding socket files)
+	find . -type d (Finding directories)
+	find . -type d -name ".*" (Finding hidden directories)
+	find . -type f (finding regular files)
+
+11. How to find files based on the size
+	find . -size  10M (Finding files whose size is exactly 10M)
+	find . -size +10M (Finding files larger than 10M size)
+	find . -size -10M (Finding files smaller than 10M size)
+
+12. Find the files which are modified after the modification of a give file.
+    find -newer "sum.java"  This command display all files which are modified after file "sum.java"
+    find -anewer "sum.java" Display the files which are accessed after the modification of a give file
+    find -cnewer "sum.java" Display files which are changed after modification of a given file.
+
+13. Find the files based on the file permissions
+	find . -perm 777
+	
+14. File based on time.
+    find . -mmin -30	files which are modified within 30 minutes.
+	find . -mtime -1 	files which are modified within 1 day
+	find . -not -mmin 	files modified 30 minutes back
+	find . -not -mtime -1 files modified 1 day back
+	find . -amin -60 	files accessed within 1 hour.
+	find . -atime -1 	files modified within 1 day.
+	find . -cmin -120 	files changed within 2 hours.
+	find . -ctime -2 	files changed withing 2 days.
+
+15. To find files which are created between two files.
+	find . -cnewer f1 -and ! -cnewer f2
+
+16. Find the permissions of files which contain name "java"?
+	find -name "*java*" -exec ls -l {} \;
+
+17. find files which have name "java" in it and then display only files which have "class" word in them.
+    find -name "*java*" -exec grep -H class {} \;
+	
+18. Remove files which contain name "java"
+    find -name "*java*" -exec rm -r {} \;
+	
+GREP:
+Grep stands for Global search for Regular Expressions and Print.
+
+1. grep -i "error" logfile.txt  (Search for a string "error" with case in-sensitive in a file logfile.txt)
+2. grep "error" file1 file2 	(searching for a string in multiple file)
+
+Specifying the search string as a regular expression pattern.
+	grep "^[0-9].*" file.txt  	(This will search for the lines which starts with a number.)
+3. grep -w "word" file.txt 		(checking for whole word).
+4. grep -B 2 "error" file.txt 	(print matched lines along with two lines before matched lines)
+5. grep -A 3 "error" file.txt	(print matched lines along with three lines after the matched lines)
+6. grep -C 5 "error" file.txt 	(This will display the matched lines and also five lines before and after the matched lines.)
+
+Searching in all files
+7. grep -r "string" * 			(You can search for a string in all the files under the current directory and sub-directories with the help -r option)
+8. grep -v "string" file.txt	(Display lines that are not matched with specified search string pattern using -v option)
+9. grep -v "^$" file.txt 		(Displaying non-empty lines)
+10. grep -c "string" file.txt 	(Display count of number of matches)
+11. grep -l "string" * 			(Display file names that matches pattern)
+12. grep -L "string" * 			(Display files which do not contain matched string/pattern)
+13. grep -o "string" file.txt	(Displaying only the matched pattern. By default, grep displays the entire line which has the matched string. We can make the grep to display only the matched string by using the -o option.)
+14. grep -n "string" file.txt	(Display the line number)
+15. grep -o -b "string" file.txt(Display position of matched string in a file. The -b option allows the grep command to display the character position of the matched string in a file.)
+16. grep "^start" file.txt 		(Matching the lines that start with a string, The ^ regular expression pattern specifies the start of a line.)
+17. grep "end$" file.txt 		(Matching the lines that end with a string, The $ regular expression pattern specifies the end of a line.)
+	

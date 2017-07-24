@@ -1,0 +1,506 @@
+1. What is the difference between command using 
+
+--no-ff and --ff
+
+-ff: If the merge resolves as a fast-forward, it will only update the branch pointer without creating a merge commit. 
+i.e it has linear path from the current branch tip to the target branch.
+Ex: git merge <branch-name>
+
+--no-ff: Merge the specified branch into current branch, and generate a merge commit. This is useful for documenting all merges that occurs in your repository. 
+
+2. Have you ever used git push --force
+No, it is a dangerous command, it will make/update/override remote repo changes with local repo.
+makes the remote repository’s branch match your local one, deleting any upstream changes that may have occurred since you last pulled.
+
+3. What is stash?
+	GIT stash takes the current state of the working directory and index and puts in on the stack for later and gives you back a clean working directory.
+	It will record current state of working directory and the index.
+
+4. How to remove certain commit id completly after pushing the changes to master?
+We can use rebase in interactive mode and squash commits.
+
+suppose if you have pushed few commits, and want to add new element into the feature and you want to squash last three commits in one to make
+your history look pretty and clear.
+git rebase -i HEAD~3
+This will open up your editor with the following:
+
+pick f392171 Added new feature X
+pick ba9dd9a Added new elements to page design
+pick df71a27 Updated CSS for new elements
+
+now you can tell what to do with each element. lets keep f392171 commit and squash other two commits.
+Change your file to this and save it.
+pick f392171 Added new feature X
+squash ba9dd9a Added new elements to page design
+squash df71a27 Updated CSS for new elements
+
+Note: do not squash commits that you’ve already shared with others. You’re changing history and it will cause trouble for others.
+
+5. What exactly commit has?
+It has the records of changes to the repository. It takes the staged snapshot and commits it to the project history.
+git commit -m "commit message"
+
+6. How to change the commit message?
+we can change commit message using amend
+git commit --amend -m "new message"
+	use "amend" whenever you want to change / edit your very last and unpushed commit.
+Note: The amend operation will destroy the state that was previously saved in a commit. But if the contents are being amended then chances of eliminating something important remains more. 
+
+7. How you connect to your colleage's repository?
+git remote add <local-repo-name> <URL>
+	This command create a new connection to a remote repository. Here <local-repo-name> is a short-cut for <URL>
+git remote rm <name> 
+	This command will remove connection to remote repository <name>
+git remote rename <old-name> <new-name> 
+	Rename a remote connection from <old-name> to <new-name>
+	
+8. How to get colleage's repository to your local repository?
+	git remote add <local-repo-name> <URL>
+
+9. What is rebase?
+	It is used to reapply commits on top of another base tip.
+	“Rebasing” is an alternative to merging in git.
+	git rebase [new-commit] 
+
+10. What is difference between bare and non-bare repository?
+bare:
+The --bare flag creates a repository that doesn’t have a working directory, making it impossible to edit files and commit changes in that repository.
+Central repositories should always be created as bare repositories because pushing branches to a non-bare repository has the potential to overwrite changes.
+Think of --bare as a way to mark a repository as a storage facility, opposed to a development environment. 
+This means that for virtually all Git workflows, the central repository is bare, and developers local repositories are non-bare.
+git clone --bare <remote-URL> <local-repo-name>
+		To co-ordinate with the distributed development and developers team, especially when you are working on a project from multiple computers ‘Bare Repository’ is used. 
+	A bare repository comprises of a version history of your code.
+		Git assumes that the bare repository will serve as the origin repository for several remote users, so it does not create the default remote origin. What this means is that basic git pull and git push operations won't work since Git assumes that without a workspace, you don't intend to commit any changes to the bare repository:
+derek@derek-OptiPlex-960:~/Projects/bare$ git push
+fatal: No destination configured to push to.
+derek@derek-OptiPlex-960:~/Projects/bare$ git pull
+fatal: /usr/lib/git-core/git-pull cannot be used without a working tree.
+derek@derek-OptiPlex-960:~/Projects/bare$ 
+		
+Non-bare:
+git clone test <local-repo-name>
+	This will create local repository with workspace.
+	The one which has working tree makes sense on the local machine of each contributor of your project.
+	
+11. How you push all changes to the remote repository?
+	git push -all
+git push origin master
+	This command pushes the master branch on to origin repository.
+git push <remote> --all 
+	Push all of your local branches to the specified remote.
+
+
+12. How to create branch?
+	git branch <branch-name>
+	
+13. What is the difference between Head and master?
+Head
+	HEAD is a ref (reference) to the currently checked out commit. In normal states, it's actually a symbolic ref to the branch you have checked out
+	HEAD really just means "what is my repo currently pointing at".
+	HEAD: the current commit your repo is on.
+Master:
+	The default branch name in Git is master.
+	
+14. How to create and move new branch?
+	git checkout -b <branch-name>
+	
+15. If you have created a new branch, and you have created files and make some changes, but at the end you want to have files exactly same as old branch, how will you achieve this?
+	I will simply checkout to the old branch and delete new branch.
+	
+16. Question on merging?
+
+17. check if remote repository exists?
+git ls-remote -h "$REPO_URL"
+
+18. How will you know in GIT if a branch has been already merged into master?
+git branch --merged
+	List the branch which are merged.
+git branch --no-merged
+	List the branch which are not merged.
+	
+19. How can you fix a broken commit?
+To fix any broken commit, you will use the command “git commit—amend”. 
+By running this command, you can fix the broken commit message in the editor.
+
+20. What is the difference between distributed version contral system and server centric version control system?
+
+21. What is GIT?
+	GIT is a distributed version control system and source code management (SCM) system with an emphasis to handle small and large projects with speed and efficiency.
+
+22. What is a repository in GIT?
+	A repository contains a directory named .git, where git keeps all of its metadata for the repository. The content of the .git directory are private to git.
+
+23. What is the difference between GIT and SVN?
+1. 	Git is less preferred for handling extremely large files or frequently changing binary files.
+	SVN can handle multiple projects stored in the same repository.
+2. 	GIT does not support ‘commits’ across multiple branches or tags. 
+	Subversion allows the creation of folders at any location in the repository layout.
+
+24. What language is used in GIT?
+	GIT is fast, and ‘C’ language makes this possible by reducing the overhead of runtimes associated with higher languages.
+
+25. How to check difference between two commits?
+
+26. How to check commit history?
+	git log lists the commits made in that repository in reverse chronological order – that is, the most recent commits show up first.
+	One of the more helpful options is -p, which shows the difference introduced in each commit. 
+	git log -p 
+	git reflog
+	"git log <since>..<until>" Show only commits that occur between <since> and <until>. Both arguments can be either a commit ID, a branch name, HEAD, or any other kind of revision reference.
+
+	27. git manifest?
+	A repo manifest describes the structure of a repo client; that is the directories that are visible and where they should be obtained from with git.
+	The basic structure of a manifest is a bare Git repository holding a single 'default.xml' XML file in the top level directory.
+
+28. what is use of reset?
+
+
+29. How you revert back to old file?
+	git revert HEAD
+	Revert the commit we just created.
+	
+	"git checkout a1e8fb5 hello.py" : 
+checking out an old file of commit ID:a1e8fb5 does affect the current state of your repository. with this You can re-commit the old version in a new snapshot (add and commit). Its like revert back to an old version of an individual file.
+	
+30. What is difference between git status and git log?
+    1. "git status" lets you inspect the working directory and the staging area.
+    2. "git log" only operates on the committed history.
+
+31. How to remove file from staging area?
+	git reset HEAD filename
+
+32. Difference between git show and git diff?
+	git diff: display the difference between present and last commit, before pushing.
+	git show: It will display difference between present and last commit.
+
+Perl
+1. Write a program to count total number of lines.
+2. How you debug perl program?
+	using -d option
+3. Difference between use and require keyword?
+	a. "use" act at compile time(Perl compilation phase).
+	"require" act at runtime, for this reason with "require" you will be able to import the package only if and/or when it is really needed .
+	b. "use" method is used only for modules.
+	"require" method is used for both libraries and modules.
+require:
+	1. Load an external functions from external library or modules at runtime.
+	2. Syntax: require EXPR
+		a. EXPR can be module name.
+		b. if EXPR is not supplied, it will take as $_ (default scalar variable in perl).
+		c. if EXPR is numeric, demands that current version of perl($] or $PERL_VERSION) to be equal or greater than EXPR.
+		d. demands that a library file be included if it hasn't already been included.
+			Ex: require mymodule.pm
+		The file mymodule.pm must return TRUE as the last statement to indicate successful execution of any initialization code, so it's customary to end such a file with `` 1;'' 
+		e. If EXPR is a bareword, the require assumes a ``.pm'' extension and replaces ``::'' with ``/'' in the filename for you, to make it easy to load standard modules.
+		Example: if you try this:
+		        require Foo::Bar;    # a splendid bareword 
+		The require function will actually look for the ``Foo/Bar.pm'' file in the directories specified in the @INC array.
+
+use:
+	1. load in a module at compile time
+	2. Syntax:
+		a. use module LIST 		Ex: use mymodule qw(mysub, myarr, myvar, myref)
+		b. use module 			Ex: use mymodule
+		c. use Module VERSION LIST	Ex: use Module 5.6.1 qw(mysub, myarr, myvar, myref)
+		d. use VERSION			Ex: use 5.6.1
+	3. use generally Imports some semantics into the current package from the named module.
+	4. use Module LIST
+		It is exactly equivalent to
+		    BEGIN { require Module; import Module LIST; }
+		except that Module must be a bareword.
+		Ex: 
+			use strict; looks like below code
+			BEGIN{
+				    require 'strict.pm';
+				    strict->import();
+			}
+		The BEGIN forces the require and import() to happen at compile time.
+		The require makes sure the module is loaded into memory
+
+	4. If you don't want your namespace altered, explicitly supply an empty list:
+		use Module ();
+		That is exactly equivalent to
+		BEGIN { require Module } 
+	5. If the first argument to use is a number, it is treated as a version number instead of a module name. If the version of the Perl interpreter is less than VERSION, then an error message is printed and Perl exits immediately. 
+	6. Because this is a wide-open interface, pragmas (compiler directives) are also implemented this way. Currently implemented pragmas are:
+    use integer;
+    use diagnostics;
+    use sigtrap qw(SEGV BUS);
+    use strict  qw(subs vars refs);
+    use subs    qw(afunc blurfl);
+
+
+4. How you load module in perl?
+	1. A module is a named container for a group of variables and subroutines which can be loaded into your program. 
+	2. Modules can be called using use or require.
+	Use: The use command tells perl to find and load the module named Digest::MD5 and then to invoke Digest::MD5->import('md5_hex'). That import() installs the function Digest::MD5::md5_hex into your current program.
+	3. When you use a module, perl is following a built-in plan for how to find and load the correct package.
+		a. The first thing it does is to search for a .pm ("Perl Module") file in the directories listed in the global @INC array.
+			ex: print -E "say for @INC"
+
+	4. First, your module needs somewhere to live. Create a directory named lib/TestSite.
+  $ mkdir -p lib/TestSite
+Then use your editor to create the file lib/TestSite/Login.pm
+
+5. How you call a module?
+	1. Perl generally looks in library path using @INC.
+	2. It will also check the current working directory.
+	3. We can load using "use", and "require"
+	4. use: load module at compile time. It loads only module.
+	5. require: load module at run time. It loads both libraries and module.
+	6. use moduleName qw (function_name). This will load specific function called function_name.
+6. How you add different module?
+	using use and require
+
+7. What is compile time and run time in perl?
+	perl script.pl will compile script.pl then execute script.pl. 
+	require Module; will compile Module.pm then execute Module.pm.
+	If the compiler encounters a BEGIN block, it will execute the block as soon as the block is compiled. 
+	Keep in mind that use is a BEGIN block consisting of a require and possibly a import.
+	when you use strict; and use warnings; your code is preprocessed for a wider range of errors. It is done at compile time, and it'll abort if anything it spotted.
+
+8. What is the usage of strict and warnings?
+	when you use strict; and use warnings; your code is preprocessed for a wider range of errors. It is done at compile time, and it'll abort if anything it spotted.
+
+9. What is use of -w flag in perl?	
+
+10. Expect in perl.
+Expect is module in perl.
+Following three expect commands are used when automating any interactive processes.
+	send 	-- to send the strings to the process.
+	expect 	-- wait for the specific string from the process.
+	spawn 	-- to start command.
+
+Expect->spawn($command, @parameters) or
+
+$object = new Expect;
+$object->spawn($command, @parameters) or
+
+new Expect ($command, @parameters)
+
+Forks and execs $command. 
+
+Returns an Expect object upon success or undef if fork was unsuccessful or the command could not be found.
+spawn() passes its parameters unchanges to perl exec().
+Also note that you cannot reuse an object with an already spawned command, even if that command has exited. Sorry, but you have to allocate a new object.
+
+$object->debug = 0
+Sets debug level for $object. 1 refers to general debugging information, 2 refers to verbose debugging and 0 refers to no debugging.
+
+$object->print(@strings) or
+$object->send(@strings)
+Sends the given strings to the spawned command. 
+
+How you send control characters to a process?
+You can send any characters to a process with print command.
+To represent a control character in perl, use \c followed by letter.
+Ex: control-G can be represented with "\cG". To send control-C to a process in $exp use
+print $exp "\cC"; or $exp->send("\cC")
+
+How you log the whole session to a file.
+$exp->log_file("filename"); or $exp->log_file($Filehandle)
+
+To stop logging, just call it with a false argument:
+$exp->log_file(undef);
+
+How do I get what was read on the handle?
+$read = $process->before();
+
+I seem to have problems with terminal settings, double echoing?
+  $exp = new Expect;
+  $exp->raw_pty(1);
+  $exp->spawn(...);
+  
+How come when I automate the passwd program to change passwords for me passwd dies before changing the password sometimes/every time?
+What's happening is you are closing the handle before passwd exits. When you close the handle to a process, it is sent a signal (SIGPIPE?) telling it that STDOUT has gone away. The default behavior for processes is to die in this circumstance. Two ways you can make this not happen are:
+
+$process->soft_close();
+	This will wait 15 seconds for a process to come up with an EOF by itself before killing it.
+$process->expect(undef);
+	This will wait forever for the process to match an empty set of patterns. It will return when the process hits an EOF.
+
+I just want to read the output of a process without expect()ing anything. How can I do this?
+[ Are you sure you need Expect for this? How about qx() or open("prog|")? ]
+By using expect without any patterns to match.
+  $process->expect(undef); # Forever until EOF
+  $process->expect($timeout); # For a few seconds
+  $process->expect(0); # Is there anything ready on the handle now?
+
+Tell me some thing about cpan?
+cpan is package installer.
+
+perl -MCPAN -e shell
+	This command will take you to cpan shell.
+	for installing package use "install package_name"
+
+What is difference between Array and Hash?
+
+Hashes in perl?
+A hash is a set of key/value pairs. 
+%data = ('John Paul', 45, 'Lisa', 30, 'Kumar', 40);
+%data	:Hash variables are preceded by a percent (%) sign.
+$data{'John Paul'}	:To refer to a single element of a hash, you will use the hash variable name preceded by a "$" sign and followed by the "key" associated with the value in curly brackets.
+
+1. 	$data{'John Paul'} = 45;
+	$data{'Lisa'} = 30;	
+	$data{'Kumar'} = 40;
+
+2. %data = ('John Paul', 45, 'Lisa', 30, 'Kumar', 40);
+3. %data = ('John Paul' => 45, 'Lisa' => 30, 'Kumar' => 40);
+4. %data = (-JohnPaul => 45, -Lisa => 30, -Kumar => 40);
+
+Accessing Hash Elements
+print "$data{'John Paul'}\n";
+print "$data{'Lisa'}\n";
+print "$data{'Kumar'}\n";
+
+O/P:
+45
+30
+40
+
+Extracting Slices
+@array = @data{-JohnPaul, -Lisa};
+print "Array : @array\n";
+O/P: Array : 45 30
+
+Extracting Keys and Values
+keys %Hash
+You can get a list of all of the keys from a hash by using keys function, this function returns an array of all the keys of the named hash.
+@names = keys %data;
+
+you can use values function to get a list of all the values.
+values %HASH
+@ages = values %data;
+
+Checking for Existence
+exists(key)	:returns true if the named key exists.
+
+if( exists($data{'Lisa'} ) ){
+   print "Lisa is $data{'Lisa'} years old\n";
+}
+else{
+   print "I don't know age of Lisa\n";
+}
+
+Getting Hash Size:
+You can get the size - that is, the number of elements from a hash by using the scalar context on either keys or values.
+
+@keys = keys %data;
+$size = @keys;
+print "1 - Hash size:  is $size\n";
+
+@values = values %data;
+$size = @values;
+print "2 - Hash size:  is $size\n";
+
+Add and Remove Elements in Hashes
+# adding an element to the hash;
+$data{'foo'} = 55;
+
+# delete the same element from the hash;
+delete $data{'foo'};
+
+What are special variables in perl?
+Special Variables:
+Global Scalar Special Variables.
+$_ or $ARG	:The default input and pattern-searching space.
+$. or $NR	:The current input line number of the last filehandle that was read. 
+$/ or $RS	:The input record separator; newline by default.
+$? or $CHILD_ERROR	:The status returned by the last pipe close, backtick (``) command, or system operator.
+$! or $ERRNO	: If used in a numeric context, yields the current value of the errno variable, identifying the last system call error. 
+If used in a string context, yields the corresponding system error string.
+$$ or $PID	:The pid of the Perl process running this script.
+$<	:The real user ID (uid) of this process.
+$>	:The effective user ID of this process.
+$(	:The real group ID (gid) 
+$)	:The effective gid of this process.
+$0	:Contains the name of the file containing the Perl script being executed.
+
+Global Array Special Variables
+@ARGV	:The array containing the command-line arguments intended for the script.
+@INC	:The array containing the list of places to look for Perl scripts to be evaluated by the do, require, or use constructs.
+
+Global Hash Special Variables
+%INC	:The hash containing entries for the filename of each file that has been included via do or require.
+%ENV	:The hash containing your current environment.
+%SIG	:The hash used to set signal handlers for various signals.
+
+Global Special Filehandles
+ARGV	:The special filehandle that iterates over command line filenames in @ARGV. Usually written as the null filehandle in <>.
+STDERR	:The special filehandle for standard error in any package.
+STDIN	:The special filehandle for standard input in any package.
+STDOUT	:The special filehandle for standard output in any package.
+
+Global Special Constants
+__END__		:Indicates the logical end of your program. Any following text is ignored, but may be read via the DATA filehandle.
+__FILE__	:Represents the filename at the point in your program where it's used. Not interpolated into strings.
+__LINE__	:Represents the current line number. Not interpolated into strings.
+__PACKAGE__	:Represents the current package name at compile time, or undefined if there is no current package. Not interpolated into strings.
+
+Regular Expression Special Variables
+$` or $PREMATCH	:The string preceding whatever was matched by the last successful pattern match.
+$' or $POSTMATCH	:The string following whatever was matched by the last successful pattern match.
+
+What are references in perl?
+A Perl reference is a scalar data type that holds the location of another value which could be scalar, arrays, or hashes.
+
+Create References
+$scalarref = \$foo;
+$arrayref  = \@ARGV;
+$hashref   = \%ENV;
+$coderef   = \&handler;
+$globref   = \*foo;
+
+You cannot create a reference on an I/O handle (filehandle or dirhandle) using the backslash operator but a reference to an anonymous array can be created using the square brackets
+
+$arrayref=[1, 2, ['a', 'b', 'c']];
+
+Similar way you can create a reference to an anonymous hash using the curly brackets 
+$hashref = {
+   'Adam'  => 'Eve',
+   'Clyde' => 'Bonnie',
+};
+
+A reference to an anonymous subroutine can be created by using sub without a subname.
+$coderef = sub { print "Boink!\n" };
+
+Dereferencing
+Dereferencing returns the value from a reference point to the location. To dereference a reference simply use $, @ or % as prefix of the reference variable depending on whether the reference is pointing to a scalar, array, or hash.
+
+$var=10;
+$r=\$var;
+print $$var;
+
+@var = (1, 2, 3);
+$a=\@var;
+print @$a;
+
+%var = ('key1' => 10, 'key2' => 20);
+$h=\%var;
+print %$h;
+
+If you are not sure about a variable type, then its easy to know its type using ref
+ref $r; O/P:Scalar
+ref($a); O/P: ARRAY
+ref($h); O/P: HASH
+
+Circular References
+A circular reference occurs when two references contain a reference to each other.
+
+my $foo = 100;
+$foo = \$foo;
+print "Value of foo is : ", $$foo, "\n";
+
+O/P: Value of foo is : REF(0x9aae38)
+
+References to Functions:
+sub PrintHash{
+}
+# Create a reference to above function.
+$cref = \&PrintHash;
+
+# Function call using reference.
+&$cref(%hash);
+
