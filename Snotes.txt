@@ -1,3 +1,519 @@
+What is shell script?
+1. A text file
+2. with instructions
+3. executables	
+
+Normally shells are interactive. It means shell accept command from you (via keyboard) and execute them. But if you use command one by one (sequence of 'n' number of commands) , the you can store this
+sequence of command to text file and tell the shell to execute this text file instead of entering the commands. This is know as shell script.
+
+Shell Script is series of command written in plain text file. 
+
+Variables:-
+Two types of variables
+    1. System Variables 	
+    	Ex:- SHELL, BASH, COLUMNS, HOME .....etc......
+    to use $ is used before variable name. 
+    #echo $SHELL
+    2. User Define Variables 
+    Syntax:
+    		variable name=value
+    a. 'value' is assigned to given 'variable name' and Value must be on right side = sign.
+    b. Variable name must begin with Alphanumeric character or underscore character (_), followed by one or more Alphanumeric character.
+    c. Don't put spaces on either side of the equal sign when assigning value to variable.
+    	ex:- $no =10 and	$no= 10 and $no = 10 will throw errors.
+    d. Variables are case-sensitive, just like filename in Linux.
+    e. You can define NULL variable as follows (NULL variable is variable which has no value at the time of definition) For e.g.
+    	$ vech=
+    	$ vech=""
+    f. Do not use ?,* etc, to name your variable names.
+
+UDV can access using $ sign
+	syntax:		$variablename
+Note:- Do not try $ echo vech, as it will print vech instead its value
+
+echo Command:- 
+Use echo command to display text or value of variable.
+
+Options
+-n Do not output the trailing new line.
+-e Enable interpretation of the following backslash escaped characters in the strings:
+\a alert (bell)
+\b backspace
+\c suppress trailing new line
+
+For e.g. $ echo -e "An apple a day keeps away \a\t\tdoctor\n"
+
+Shell Arithmetic:-
+Syntax:
+expr op1 math-operator op2
+Examples:
+$ expr 1 + 3
+$ expr 2 - 1
+$ expr 10 / 2
+$ expr 20 % 3
+$ expr 10 \* 3
+$ echo `expr 6 + 3`
+before expr keyword we used ` (back quote: To execute command) sign not the (single quote i.e. ') sign.
+ Here if you use double quote or single quote, it will NOT work
+For e.g.
+$ echo "expr 6 + 3" # It will print expr 6 + 3
+$ echo 'expr 6 + 3' # It will print expr 6 + 3
+
+Exit Status
+By default in Linux if particular command/shell script is executed, it return two type of values which is used to see whether command or shell script executed is successful or not.
+(1) If return value is zero (0), command is successful.
+(2) If return value is nonzero, command is not successful or some sort of error executing command/shell
+script.
+This value is know as Exit Status.
+Ex:- 
+$ ls
+$ echo $?
+It will print 0 to indicate command is successful.
+
+The read Statement:-
+Use to get input (data from user) from keyboard and store (data) to variable.
+Syntax:
+read variable1, variable2,...variableN
+for example refer read.sh
+
+Wild cards (Filename Shorthand or metaCharacterso)
+1. * Matches any string or group of characters.
+Ex:- 1. $ls *		 will show all files
+     2. $ls a*		 will show all files starting with a
+     3. $ls *.c		 will show all files having extension is .c
+2. ? matches any single character
+Ex:- 1. $ls ? 		 will show those files whose names are one character long
+     2. $ls fo?		 will show all files whose names are 3 character long and file name begin with fo
+3. [...] matches any one of the enclosed characters
+Ex:- $ls [abc]*will show all files beginning with letters a,b,c
+
+More command on one command line
+Syntax:
+command1;command2
+To run two command with one command line.
+
+
+command Line Processing:-
+$ ls grate_stories_of
+What are commands? 
+The first word on command line is, ls - is name of the command to be executed.
+Everything else on command line is taken as arguments to this command.
+
+command Line arguments required?
+1. Telling the command/utility which option to use.
+2. Informing the utility/command which file or group of files to process (reading/writing of files).
+
+How to access command line arguments into the script?
+Ans:- Using $agrv1 $argv2 .....
+Example:-
+	1. $0 is script name
+	2. $1 is first argument
+	3. $2 is second argument
+	4. All of them are :- $* or $@
+refer commArg.sh
+
+
+Redirection of Standard output/input i.e. Input - Output redirection:- 
+
+cat > hello.sh <<MY_PROGRAM
+It will create a file with the name hello.sh, and it will add the contents whatever you entered from the command prompt, but at the end you should add MY_PROGRAM to mark the eof of the file.
+
+if we won't pass MY_PROGRAM at the end, the it will through a warning as,
+bash: warning: here-document at line 35 delimited by end-of-file (wanted `MY_PROGRAM')
+
+#what is difference between $?, $*, $#, $@?
+#$?: This will give the status of command being executed, if command executaion is successful it will give 0, if fails, it will give negative value.
+#$*: It will form string for command line arguments.
+#$@: It will make array of command line arguments.
+#$#: It will give total number of command line arguments.
+
+
+NAME[0]="Zara"
+NAME[1]="Qadir"
+NAME[2]="Mahnaz"
+NAME[3]="Ayan"
+NAME[4]="Daisy"
+echo "First Index: ${NAME[0]}"
+echo "Second Index: ${NAME[1]}"
+
+#You can access all the items in an array in one of the following ways −
+
+echo ${NAME[*]}
+echo ${NAME[@]}
+
+
+pipes:-
+	A pipe is a way to connect the output of one program to the input of another program without any temporary file.
+	Pipe Defined as: "A pipe is nothing but a temporary storage place where the output of one command is stored and then passed as the input for second command. 
+
+syntax:
+command1 | command2
+Ex:- 
+1. $ ls | more 	output of ls command is given as intput to more command so that output is printed one screen full page at a time.
+2. $ who | sort   output of who command is given as input to sort command so that it will print sorted list of the users
+3. $ who | sort > user_list 	same as above, except sorted list is send to user_list file.
+4. $ ls -l | wc -l	Output of ls command is given as input to wc command So that it will print number of files in current directory.
+
+What is Processes?
+	"A process is program (command given by user) to perform specific Job. In Linux when you start process, it gives a number to process (called PID or process-id), PID starts from 0 to 65535."
+	"An instance of running command is called process and the number printed by shell is called process-id (PID), this PID can be use to refer specific running process."
+
+1. ps :- To see currenty running process.
+2. kill (PID) :- To stop any process by PID
+3. killall {process_name} :- To stop processes by name
+4. ps -ag :- To get information about all running process
+5. kill 0 :- To stop all process except your shell.
+6. linux-command & :- for background processing
+7. top :- to see currently running process
+8. pstrdd:- To display a tree of process.
+
+
+
+-eq is equal to
+-ne is not equal to
+-lt is less than
+-le is less than or equal to
+-gt is greater than
+-ge is greater than or equal to
+
+t
+-s file   Non empty file
+-f file   Is File exist or normal file and not a directory
+-d dir    Is Directory exist and not a file
+-w file   Is writeable file
+-r file   Is read-only file
+-x file   Is file is executable
+
+
+! expression  Logical NOT
+expression1 -a expression2  	Logical AND
+expression1 -o expression2	Logical OR
+
+environment variables
+%NEW_VAR="YES"
+%echo $NEW_VAR
+%export NEW_VAR
+%env
+Now it will show the env variable NEW_VAR in the env.
+
+continuing line:- \
+
+exit statues:-
+$? It will keep exit status of the previous executed command.
+0 is true
+
+%ls /does/not/exit/
+%echo $?
+1
+%echo $?
+
+Logic: test
+test command or [ expr ]
+test command or [ expr ] is used to see if an expression is true, and if it is true it return zero(0), otherwise
+returns nonzero for false.
+Syntax:
+test expression OR [ expression ]
+
+
+%test 1 -lt 10
+%echo $?
+0
+%test 1 == 10
+%echo $?
+1
+
+condition check:-
+1. []
+[1 -lt 10]
+
+2. [[]]
+[["This is string"]]
+
+3. (())
+((1 < 10))
+
+$(( )) for Math
+% echo $(( 1 + 2 ))
+3
+% echo $(( 2 * 3 ))
+6
+% echo $(( 1 / 3 ))
+0
+
+
+[ -f /etc/passwd ]
+[ ! –f /etc/passwd ]
+[ -f /etc/passwd –a –f /etc/shadow ]
+[ -f /etc/passwd –o –f /etc/shadow ]
+
+$(( )) for Math
+% echo $(( 1 + 2 ))
+3
+% echo $(( 2 * 3 ))
+6
+% echo $(( 1 / 3 ))
+0
+
+
+Logic:- if
+if condition:-
+
+if something
+then
+   :
+   :
+elif something-else
+then
+   :
+   :
+else
+   :
+   :
+fi
+
+for:-
+
+for Loop
+Syntax:
+for { variable name } in { list }
+do
+
+	execute one for each item in the list until the list is not finished (And repeat all statement between do and done)
+
+done
+
+
+for i in 1 2 3
+do
+        echo $i
+done
+
+C-style for
+for (( expr1    ;
+       expr2    ;
+       expr3    ))
+do
+  list
+done
+
+Logic:- while 
+
+Syntax:
+while [ condition ]
+do
+	command1
+	command2
+	command3
+	..
+	....
+done
+
+while something
+do
+  :
+
+done
+
+
+Introduction
+After learning basis of shell scripting, its time to learn more advance features of shell scripting/command
+such as:
+* Functions
+* User interface
+* Conditional execution
+* File Descriptors
+* traps
+* Multiple command line args handling etc
+
+a. /dev/null - Use to send unwanted output of program
+
+This is special Linux file which is used to send any unwanted output from program/command.
+Syntax:
+command > /dev/null
+
+b. Local and Global Shell variable (export command).
+	Normally all our variables are local. Local variable can be used in same shell, if you load another copy of shell (by typing the /bin/bash at the $ prompt) then new shell ignored all old shell's variable. 
+
+example:- 
+$ vech=Bus
+$ echo $vech
+Bus
+$ /bin/bash
+$ echo $vech (It will print empty line).
+
+Global shell defined as:
+"You can copy old shell's variable to new shell (i.e. first shells variable to seconds shell), such variable is
+know as Global Shell variable."
+
+To set global varible you have to use export command.
+Syntax:
+export variable1, variable2,.....variableN
+
+Conditional execution i.e. && and ||
+The control operators are && (read as AND) and || (read as OR). The syntax for AND list is as follows
+Syntax:
+command1 && command2
+command2 is executed if, and only if, command1 returns an exit status of zero.
+The syntax for OR list as follows
+Syntax:
+command1 || command2
+command2 is executed if and only if command1 returns a non-zero exit status.
+You can use both as follows
+Syntax:
+command1 && comamnd2 if exist status is zero || command3 if exit status is non-zero
+
+I/O Redirection and file descriptors
+
+direction opertor:-I/O redirectors are used to send output of command to file or to read input from file.
+
+By default in Linux every program has three files associated with it, (when we start our program these
+three files are automatically opened by your shell). The use of first two files (i.e. stdin and stdout) , are
+already seen by us. The last file stderr (numbered as 2) is used by our program to print error on screen.
+
+You can redirect the output from a file descriptor directly to file with following syntax
+Syntax:
+file-descriptor-number>filename
+
+1. > (write mode).
+It will direct the contents into the file.
+
+2. >> (Append mode)
+It will append the contents at the end of the file.
+
+3. 2> (error) 	
+It will direct the error
+no space are allowed between 2 and >, The 2>er directs the standard error output to file.
+The 1>&2 at the end of echo statement (refer std_in_out_err.sh file), directs the
+standard output (stdout) to standard error (stderr) device.
+Syntax:
+from>&destination
+
+
+
+4. <<
+It redirect the contents to the command
+ex:- cat <<file.txt
+
+5. cat > text.txt 2>&file_err.txt
+
+6. sorting file contents (refer sname file)
+	sort < sname > sort_sname
+7. convert lower case to upper using tr
+	tr "[a-z]" "[A-Z]" < sname > caps_sname
+
+Functions:-
+
+To define function use following syntax:
+Syntax:
+function-name( )
+    {
+        command1
+        command2
+        .....
+        ...
+        commandN
+        return
+    }
+Where function-name is name of you function, that executes series of commands. A return statement will
+terminate the function. Example:
+Type SayHello() at $ prompt as follows
+$ SayHello()
+{
+    echo "Hello $LOGNAME, Have nice computing"
+    return
+}
+To execute this SayHello() function just type it name as follows:
+$ SayHello
+Hello vivek, Have nice computing.
+This way you can call function. 
+Note that after restarting your computer you will loss this SayHello() function, since its created for current session only.
+
+To overcome this problem, add your function to /etc/bashrc file. The function is available to all user in your system.
+
+If you want to add particular function to particular user then open .bashrc file in users home directory. 
+
+User Interface and dialog utility-Part I:-
+
+Good program/shell script must interact with users. You can accomplish this as follows:
+(1) Use command line arguments (args) to script when you want interaction i.e. pass command line args
+to script.
+(2) Use statement like echo and read to read input into variable from the prompt.
+
+The shift Command:-
+The shift command moves the current values stored in the positional parameters (command line args) to the left one position.
+refer cmd_shift.sh
+You can also move the positional parameters over more than one place by specifying a number with the shift command.
+
+You can use shift command to parse the command line (args) option. 
+refer cmd_shift.sh (part-2).
+
+
+getopts command
+This command is used to check valid command line argument are passed to script. Usually used in while loop.
+Syntax:
+getopts {optstring} {variable1}
+for example refer getopts.sh
+
+Prepering for Quick Tour of essential utilities:- 
+for below example's refer a file with the name sname.
+Selecting portion of a file using cut utility:-
+Syntax:
+cut -f{field number} {file-name}
+
+Use of Cut utility:
+Selecting portion of a file.
+Using (-f) option, you are specifying the extraction field number.
+cut -f2 sname 
+Vivek
+Renuka
+Prakash
+Ashish
+Rani
+
+cut -f1 sname
+11
+12
+13
+14
+15
+
+Putting lines together using paste utility
+General Syntax of paste utility:
+Syntax:
+paste {file1} {file2}
+Use of paste utility:
+Putting lines together.
+
+$ paste sname smark
+11 	Vivek 	11 	67
+12 	Renuka 	12 	55
+13 	Prakash 13 	96
+14 	Ashish 	14 	36
+15 	Rani   	15 	67
+
+
+The join utility
+General Syntax of join utility:
+Syntax:
+join {file1} {file2}
+Use of join utility:
+The join utility joins, lines from separate files.
+
+$join sname smark
+11 	Vivek 	67
+12 	Renuka 	55
+13 	Prakash 96
+14 	Ashish 	36
+15 	Rani 	67
+
+Here students names are matched with their appropriate marks. How ? join utility uses the Sr.No. field to join to files. Notice that Sr.No. is the first field in both sname and smark file.
+
+Note that join will only work, if there is common field in both file and if values are identical to each other.
+
+Translateing range of characters using tr utility:-
+
+
+
 AWK Command:
 Awk is one of the most powerful tools in Unix used for processing the rows and columns in a file.
 Syntax: awk 'BEGIN {start_action} {action} END {stop_action}' filename
@@ -125,6 +641,7 @@ Use the -n option along with the /p print flag to display only the replaced line
 sed '3 s/unix/linux/' file.txt
 >sed '1,3 s/unix/linux/' file.txt  (Replacing string on a range of lines.)
 
+
 17. Add a line after a match.
 The sed command can add a new line after a pattern match is found. The "a" command to sed tells it to add a new line after a match is found.
 sed '/unix/ a "add a new line" file.txt
@@ -140,6 +657,12 @@ The sed command can be used to convert lower case letters to upper case letters 
 >sed 'y/ul/UL/' file.txt
 
 
+
+
+
+#!/bin/bash -e
+# find commit from tag
+git log --decorate --oneline |grep tag:\ ${1}
 
 
 Find:
@@ -216,6 +739,95 @@ To print the files in the subdirectories between level 1 and 4
 18. Remove files which contain name "java"
     find -name "*java*" -exec rm -r {} \;
 	
+pdiff
+!/bin/sh
+## proceed with profile diff
+## to handle profile commit message and associated issues
+## to be runned inside profile repo
+
+do_msg() {
+    if [ -z "${skip_prompt}" ]; then
+        echo "$@"
+    fi
+}
+
+skip_commit=
+skip_prompt=
+skip_plog=
+
+diff_args=
+diff_issues=
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -l ) skip_plog=1 ;;
+        -c ) skip_commit=1 ;;
+        -p ) skip_prompt=1 diff_args="${diff_args}p" ;;
+        -s ) diff_args="${diff_args}s" ;;
+        -u ) diff_args="${diff_args}u" ;;
+        -v ) diff_args="${diff_args}v" ;;
+        *  ) diff_issues="${diff_issues} $1" ;;
+    esac
+    shift
+done
+
+diff_test=$(git diff 2>/dev/null)
+if [ $? -gt 0 ]; then
+    >&2 echo "no diff..."
+    return 1
+fi
+diff_file=$(git diff --name-only 2>/dev/null |head -n 1)
+if [ -z "${diff_file}" ]; then
+    >&2 echo "no diff..."
+    return 1
+fi
+
+if [ -z "${skip_prompt}" ]; then
+    git diff --unified=0 --ignore-space-at-eol --shortstat
+fi
+
+diff_issues=$(echo "${diff_issues}" |tr -d " ")
+[ -n "$diff_issues" ] && diff_issues_msg="#$diff_issues"
+diff_pkg=$(git diff |grep ^+= |sed "s/^+=/=/g" |sort -u)
+diff_msg="${diff_file}: ${diff_pkg} ${diff_issues_msg}"
+diff_args="-y${diff_args}"
+if [ -z "${skip_plog}" ]; then
+    #~ plog ${diff_args} ${diff_issues} -m "${diff_msg}"
+    plog ${diff_args} ${diff_issues}
+fi
+
+if [ -z "${skip_commit}" -a -z "${skip_prompt}" ]; then
+    echo "git add . && git commit -m \"${diff_msg}\""
+    echo "[enter] for confirming msg or type new one"
+    echo "[-c] for skipping commit"
+    read -p "? " diff_prompt
+    [ -n "${diff_prompt}" ] && diff_msg=${diff_prompt}
+    [ "${diff_prompt}" = "-c" ] && skip_commit=1
+fi
+
+if [ -z "${skip_commit}" ]; then
+    #~ echo "git add . && git commit -m \"${diff_msg}\""
+    git add . && git commit -m "${diff_msg}"
+fi
+	
+
+vig
+#!/bin/bash
+## vi $(grep ARG) wrapper for editing profile
+## and optionally wrapping it to pdiff
+## vig path_to/component-X [REDMINE_ID [-s: for status only]]
+#~ set -x
+GREP_OPT='--devices=skip --binary-files=without-match --color=auto'
+for pattern in .cvs .git .hg .svn metadata; do
+    GREP_OPT="$GREP_OPT --exclude=$pattern"
+done
+p_dir=profile
+[ -d profiles ] && p_dir=profiles
+vi $(grep $GREP_OPT -rn $1 $p_dir/)
+if [ $# -gt 1 ]; then
+    pdiff $2 $3
+fi
+~       	
+
 GREP:
 Grep stands for Global search for Regular Expressions and Print.
 
@@ -238,7 +850,6 @@ Searching in all files
 12. grep -L "string" * 			(Display files which do not contain matched string/pattern)
 13. grep -o "string" file.txt	(Displaying only the matched pattern. By default, grep displays the entire line which has the matched string. We can make the grep to display only the matched string by using the -o option.)
 14. grep -n "string" file.txt	(Display the line number)
-15. grep -o -b "string" file.txt(Display position of matched string in a file. The -b option allows the grep command to display the character position of the matched string in a file.)
+15. grep -o -b "string" file.txt (Display position of matched string in a file. The -b option allows the grep command to display the character position of the matched string in a file.)
 16. grep "^start" file.txt 		(Matching the lines that start with a string, The ^ regular expression pattern specifies the start of a line.)
-17. grep "end$" file.txt 		(Matching the lines that end with a string, The $ regular expression pattern specifies the end of a line.)
-	
+17. grep "end$" file.txt 		(Matching the lines that end with a string, The $ regular expression pattern specifies the end of a line.).
