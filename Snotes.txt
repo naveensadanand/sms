@@ -9,11 +9,28 @@ sequence of command to text file and tell the shell to execute this text file in
 Shell Script is series of command written in plain text file. 
 
 Variables:-
-Two types of variables
+Two types of variables System Variables and User Define Variables.
+
     1. System Variables 	
     	Ex:- SHELL, BASH, COLUMNS, HOME .....etc......
     to use $ is used before variable name. 
-    #echo $SHELL
+	list of all of our environmental variables by using the env or printenv commands.
+	#echo $SHELL
+	o/p: /bin/bash
+	echo $BASH_VERSION
+		Holds the version of this instance of bash.
+	echo $HOSTNAME
+		The name of the your computer.
+	echo $HISTFILE o/p: /home/rsi/.bash_history
+		The name of the file in which command history is saved.
+	echo $PATH
+		The search path for commands. It is a colon-separated list of directories in which the shell looks for commands.
+	echo $TERM
+		Your login terminal type.
+	echo $PS1
+		Display your prompt settings.
+	
+	
     2. User Define Variables 
     Syntax:
     		variable name=value
@@ -31,6 +48,17 @@ UDV can access using $ sign
 	syntax:		$variablename
 Note:- Do not try $ echo vech, as it will print vech instead its value
 
+set or unset: Change the value of shell attributes and positional parameters, or display the names and values of shell variables.
+environment variables
+%NEW_VAR="YES"
+%echo $NEW_VAR
+%export NEW_VAR
+%env
+Now it will show the env variable NEW_VAR in the env.
+
+If you want to unset UDV then use below command. This command will remove entry from env.
+unset NEW_VAR
+
 echo Command:- 
 Use echo command to display text or value of variable.
 
@@ -39,7 +67,7 @@ Options
 -e Enable interpretation of the following backslash escaped characters in the strings:
 \a alert (bell)
 \b backspace
-\c suppress trailing new line
+\c suppress trailing new line.
 
 For e.g. $ echo -e "An apple a day keeps away \a\t\tdoctor\n"
 
@@ -109,9 +137,11 @@ Example:-
 	1. $0 is script name
 	2. $1 is first argument
 	3. $2 is second argument
-	4. All of them are :- $* or $@
-refer commArg.sh
+	4. $* is string form of comamnd line argument.
+	5. $@ is a array of command line argument.
+	6. $# gives the total number of command line argument.
 
+refer commArg.sh
 
 Redirection of Standard output/input i.e. Input - Output redirection:- 
 
@@ -150,9 +180,19 @@ syntax:
 command1 | command2
 Ex:- 
 1. $ ls | more 	output of ls command is given as intput to more command so that output is printed one screen full page at a time.
-2. $ who | sort   output of who command is given as input to sort command so that it will print sorted list of the users
+2. $ who | sort   output of who command is given as input to sort command so that it will print sorted list of the users,
+	who command prints information about all users who are currently logged i
 3. $ who | sort > user_list 	same as above, except sorted list is send to user_list file.
 4. $ ls -l | wc -l	Output of ls command is given as input to wc command So that it will print number of files in current directory.
+
+wc:
+	The wc (word count) command in Unix/Linux operating systems is used to find out number of newline count, word count, byte and characters count in a files specified by the file arguments.
+wc [options] filenames
+wc -l : Prints the number of lines in a file.
+wc -w : prints the number of words in a file.
+wc -c : Displays the count of bytes in a file.
+wc -m : prints the count of characters from a file.
+wc -L : prints only the length of the longest line in a file.
 
 What is Processes?
 	"A process is program (command given by user) to perform specific Job. In Linux when you start process, it gives a number to process (called PID or process-id), PID starts from 0 to 65535."
@@ -189,12 +229,6 @@ t
 expression1 -a expression2  	Logical AND
 expression1 -o expression2	Logical OR
 
-environment variables
-%NEW_VAR="YES"
-%echo $NEW_VAR
-%export NEW_VAR
-%env
-Now it will show the env variable NEW_VAR in the env.
 
 continuing line:- \
 
@@ -223,40 +257,8 @@ test expression OR [ expression ]
 1
 
 condition check:-
-1. []
-[1 -lt 10]
-
-2. [[]]
-[["This is string"]]
-
-3. (())
-((1 < 10))
-
-$(( )) for Math
-% echo $(( 1 + 2 ))
-3
-% echo $(( 2 * 3 ))
-6
-% echo $(( 1 / 3 ))
-0
-
-
-[ -f /etc/passwd ]
-[ ! –f /etc/passwd ]
-[ -f /etc/passwd –a –f /etc/shadow ]
-[ -f /etc/passwd –o –f /etc/shadow ]
-
-$(( )) for Math
-% echo $(( 1 + 2 ))
-3
-% echo $(( 2 * 3 ))
-6
-% echo $(( 1 / 3 ))
-0
-
 
 Logic:- if
-if condition:-
 
 if something
 then
@@ -270,6 +272,74 @@ else
    :
    :
 fi
+
+Examples:
+if [ $foo -ge 3 ]; then
+The condition in this example is essentially a command. It may sound strange, but surrounding a comparison with square brackets is the same as using the built-in test command, like this:
+if test $foo -ge 3; then
+If $foo is Greater then or Equal to 3, the block after ‘then’ will be executed.
+**why bash tends to use -ge or -eq instead of >= or ==, it’s because this condition type originates from a command, where -ge and -eq are options.
+
+There also are built-in checks that are more specific to shells. Whatabout this one?
+if [ -f regularfile ]; then
+The above condition is true if the file ‘regularfile’ exists and is a regular file.
+
+You can even check if a file is readable!
+if [ -r readablefile]; then
+The above condition is true if the file ‘readablefile’ exists and is readable.
+
+The basic rules of conditions:
+	1. Always keep spaces between the brackets and the actual check/comparison. The following won’t work:
+		if [$foo -ge 3]; then
+	2. Always terminate the line before putting a new keyword like “then”. The words if, then, else, elif and fi are shell keywords, meaning that they cannot share the same line. 
+	Put a “;” between the previous statement and the keyword or place the keyword on the start of a new line. 
+	3. It is a good habit to quote string variables if you use them in conditions, because otherwise they are likely to give trouble if they contain spaces and/or newlines. By quoting I mean:
+	if [ “$stringvar” == “tux” ]; then
+	
+Also, there are two things that may be useful to know:
+	1. You can invert a condition by putting an “!” in front of it. Example:
+		if [ ! -f regularfile ]; then
+		Be sure to place the “!” inside the brackets!
+	2. You can combine conditions by using certain operators. For the single-bracket syntax that we’ve been using so far, you can use “-a” for and and “-o” for or. Example:
+		if [ $foo -ge 3 -a $foo -lt 10 ]; then
+
+1. Single-bracket syntax
+	File-based conditions
+		if [ -L symboliclink ]; then
+	String-based conditions
+		if [ -z “$emptystring” ]; then
+			The above condition is true if $emptystring is an empty string or an uninitialized variable. 
+	Arithmetic (number-based) conditions
+		if [ $num -lt 1 ]; then
+		
+2. Double-bracket syntax
+The double-bracket syntax serves as an enhanced version of the single-bracket syntax.
+It mainly has the same features, but also some important differences with it listed below.
+
+	1. The first difference can be seen in the above example; when comparing strings, the double-bracket syntax features shell globbing. This means that an asterisk (“*”) will expand to literally anything, 
+	just as you probably know from normal command-line usage. Therefore, if $stringvar contains the phrase “string” anywhere, the condition will return true.
+	if [[ “$stringvar” == *string* ]]; then
+	Note that only general shell globbing is allowed. Bash-specific things like {1..4} or {foo,bar} will not work. Also note that the globbing will not work if you quote the right string. In this case you should leave it unquoted.
+	
+	2. You can omit quoting the string, but its good habit to quote a string. Ex: if [[ $stringvarwithspaces != foo ]]; then
+	3. The third difference consists of not expanding filenames.
+		if [ -a *.sh ]; then
+		This will return true if there is only one file in current working directory match .sh, if more than 1 files exists bash will throw an error and stop executing the script.
+		if [[ -a *.sh ]]; then
+		The above condition will return true only if there is a file in the working directory called “*.sh”, no matter what other .sh files exist. 
+		
+	4. The fourth difference is the addition of more generally known combining expressions, or, more specific, the operators “&&” and “||”. Example:
+		if [[ $num -eq 3 && “$stringvar” == foo ]]; then
+3. Double-parenthesis syntax
+There also is another syntax for arithmetic (number-based) conditions, most likely adopted from the Korn shell:
+if (( $num <= 5 )); then
+The above condition is true if $num is less than or equal to 5. This syntax may seem more familiar to programmers. It features all the ‘normal’ operators, like “==”, “<” and “>=”. 
+It supports the “&&” and “||” combining expressions (but not the -a and -o ones!). 
+
+Note:
+eq,ne,gt,ge,lt,le,a,o  are works with single square bracket [ ] and single parenthesis ()
+==,!=,>,>=,<,<=,&&,||  are works with  double square bracket [[]] and double parenthesis (())
+
 
 for:-
 
@@ -330,6 +400,27 @@ a. /dev/null - Use to send unwanted output of program
 This is special Linux file which is used to send any unwanted output from program/command.
 Syntax:
 command > /dev/null
+
+/dev/null:
+	Redirecting to /dev/null won't prevent crashing, but will clean up the stdout and stderr output streams. 
+	Just a trick to avoid unnecessary output. 
+> /def/null 2>&1
+using "> /dev/null 2>&1" will redirect all your command output (both stdout and stderr) to /dev/null, meaning no outputs are printed to terminal.
+Default FD value mentioned below.
+stdin  ==> fd 0
+stdout ==> fd 1
+stderr ==> fd 2
+
+> /dev/null causing:
+stdin  ==> fd 0
+stdout ==> /dev/null	#stdout will redirecting it to /dev/null
+stderr ==> fd 2
+
+2>&1 causing:
+stdin  ==> fd 0
+stdout ==> /dev/null
+stderr ==> stdout		#stderr will redirecting to stdout (here stdout already redirecting to /dev/null)
+
 
 b. Local and Global Shell variable (export command).
 	Normally all our variables are local. Local variable can be used in same shell, if you load another copy of shell (by typing the /bin/bash at the $ prompt) then new shell ignored all old shell's variable. 
@@ -430,7 +521,7 @@ Note that after restarting your computer you will loss this SayHello() function,
 
 To overcome this problem, add your function to /etc/bashrc file. The function is available to all user in your system.
 
-If you want to add particular function to particular user then open .bashrc file in users home directory. 
+If you want to add particular function to particular user then open .bashrc file in users home directory.
 
 User Interface and dialog utility-Part I:-
 
@@ -539,10 +630,10 @@ END {print sum}
 Now execute the the script using awk command as 
 awk -f sum_column input_file.
 
-4.  awk '{ if($9 == "t4") print $0;}' input_file
-This awk command checks for the string "t4" in the 9th column and if it finds a match then it will print the entire line. 
+4. awk '{ if($9 == "t4") print $0;}' input_file
+This awk command checks for the string "t4" in the 9th column and if it finds a match then it will print the entire line.
 
-5. awk 'BEGIN { for(i=1;i<=5;i++) print "square of", i, "is",i*i; }'
+5. awk 'BEGIN {for(i=1;i<=5;i++) print "square of", i, "is",i*i;}'
 
 This will print the squares of first numbers from 1 to 5.
 
@@ -626,11 +717,11 @@ Using too many backslashes makes the sed command look awkward. In this case we c
 The first pair of parenthesis specified in the pattern represents the \1, the second represents the \2 and so on.
 sed 's/\(unix\)/\1\1/' file.txt
 
-8. Duplicating the replaced line with /p flag
+8. Duplicating the replaced line with /p flag.
 >sed 's/unix/linux/p' file.txt
-The /p print flag prints the replaced line twice on the terminal. 
+The /p print flag prints the replaced line twice on the terminal.
 
-9. Printing only the replaced lines
+9. Printing only the replaced lines.
 Use the -n option along with the /p print flag to display only the replaced lines.
 >sed -n 's/unix/linux/p' file.txt
 
@@ -640,7 +731,6 @@ Use the -n option along with the /p print flag to display only the replaced line
 11. Replacing string on a specific line number.
 sed '3 s/unix/linux/' file.txt
 >sed '1,3 s/unix/linux/' file.txt  (Replacing string on a range of lines.)
-
 
 17. Add a line after a match.
 The sed command can add a new line after a pattern match is found. The "a" command to sed tells it to add a new line after a match is found.
@@ -655,14 +745,6 @@ sed '/unix/ c "change line" file.txt
 20. Transform like tr command
 The sed command can be used to convert lower case letters to upper case letters by using transform y option.
 >sed 'y/ul/UL/' file.txt
-
-
-
-
-
-#!/bin/bash -e
-# find commit from tag
-git log --decorate --oneline |grep tag:\ ${1}
 
 
 Find:
@@ -689,8 +771,8 @@ This is like inverting the match. It prints all the files except the given file 
 7. find -mindepth 2 -maxdepth 5 -name "sum.java"
 To print the files in the subdirectories between level 1 and 4
 
-8. To find the largest file in the current directory and sub directories
-	find . -type f -exec ls -s {}\; | sort -n -r | head -1
+8. To find the largest file in the current directory and sub directories.
+	find . -type f -exec ls -s {} \; | sort -n -r | head -1
 	"find . -type f -exec ls -s {} \;": This command will list all files along with size of file.
 	sort command will sort files based on the size.
 	head command will pick only first line from output of sort.
@@ -739,95 +821,6 @@ To print the files in the subdirectories between level 1 and 4
 18. Remove files which contain name "java"
     find -name "*java*" -exec rm -r {} \;
 	
-pdiff
-!/bin/sh
-## proceed with profile diff
-## to handle profile commit message and associated issues
-## to be runned inside profile repo
-
-do_msg() {
-    if [ -z "${skip_prompt}" ]; then
-        echo "$@"
-    fi
-}
-
-skip_commit=
-skip_prompt=
-skip_plog=
-
-diff_args=
-diff_issues=
-while [ $# -gt 0 ]; do
-    case "$1" in
-        -l ) skip_plog=1 ;;
-        -c ) skip_commit=1 ;;
-        -p ) skip_prompt=1 diff_args="${diff_args}p" ;;
-        -s ) diff_args="${diff_args}s" ;;
-        -u ) diff_args="${diff_args}u" ;;
-        -v ) diff_args="${diff_args}v" ;;
-        *  ) diff_issues="${diff_issues} $1" ;;
-    esac
-    shift
-done
-
-diff_test=$(git diff 2>/dev/null)
-if [ $? -gt 0 ]; then
-    >&2 echo "no diff..."
-    return 1
-fi
-diff_file=$(git diff --name-only 2>/dev/null |head -n 1)
-if [ -z "${diff_file}" ]; then
-    >&2 echo "no diff..."
-    return 1
-fi
-
-if [ -z "${skip_prompt}" ]; then
-    git diff --unified=0 --ignore-space-at-eol --shortstat
-fi
-
-diff_issues=$(echo "${diff_issues}" |tr -d " ")
-[ -n "$diff_issues" ] && diff_issues_msg="#$diff_issues"
-diff_pkg=$(git diff |grep ^+= |sed "s/^+=/=/g" |sort -u)
-diff_msg="${diff_file}: ${diff_pkg} ${diff_issues_msg}"
-diff_args="-y${diff_args}"
-if [ -z "${skip_plog}" ]; then
-    #~ plog ${diff_args} ${diff_issues} -m "${diff_msg}"
-    plog ${diff_args} ${diff_issues}
-fi
-
-if [ -z "${skip_commit}" -a -z "${skip_prompt}" ]; then
-    echo "git add . && git commit -m \"${diff_msg}\""
-    echo "[enter] for confirming msg or type new one"
-    echo "[-c] for skipping commit"
-    read -p "? " diff_prompt
-    [ -n "${diff_prompt}" ] && diff_msg=${diff_prompt}
-    [ "${diff_prompt}" = "-c" ] && skip_commit=1
-fi
-
-if [ -z "${skip_commit}" ]; then
-    #~ echo "git add . && git commit -m \"${diff_msg}\""
-    git add . && git commit -m "${diff_msg}"
-fi
-	
-
-vig
-#!/bin/bash
-## vi $(grep ARG) wrapper for editing profile
-## and optionally wrapping it to pdiff
-## vig path_to/component-X [REDMINE_ID [-s: for status only]]
-#~ set -x
-GREP_OPT='--devices=skip --binary-files=without-match --color=auto'
-for pattern in .cvs .git .hg .svn metadata; do
-    GREP_OPT="$GREP_OPT --exclude=$pattern"
-done
-p_dir=profile
-[ -d profiles ] && p_dir=profiles
-vi $(grep $GREP_OPT -rn $1 $p_dir/)
-if [ $# -gt 1 ]; then
-    pdiff $2 $3
-fi
-~       	
-
 GREP:
 Grep stands for Global search for Regular Expressions and Print.
 
@@ -835,21 +828,21 @@ Grep stands for Global search for Regular Expressions and Print.
 2. grep "error" file1 file2 	(searching for a string in multiple file)
 
 Specifying the search string as a regular expression pattern.
-	grep "^[0-9].*" file.txt  	(This will search for the lines which starts with a number.)
+	grep "^[0-9].*" file.txt  	(This will search for the lines which starts with a number).
 3. grep -w "word" file.txt 		(checking for whole word).
 4. grep -B 2 "error" file.txt 	(print matched lines along with two lines before matched lines)
 5. grep -A 3 "error" file.txt	(print matched lines along with three lines after the matched lines)
 6. grep -C 5 "error" file.txt 	(This will display the matched lines and also five lines before and after the matched lines.)
 
 Searching in all files
-7. grep -r "string" * 			(You can search for a string in all the files under the current directory and sub-directories with the help -r option)
-8. grep -v "string" file.txt	(Display lines that are not matched with specified search string pattern using -v option)
-9. grep -v "^$" file.txt 		(Displaying non-empty lines)
+7.  grep -r "string" * 			(You can search for a string in all the files under the current directory and sub-directories with the help -r option)
+8.  grep -v "string" file.txt	(Display lines that are not matched with specified search string pattern using -v option)
+9.  grep -v "^$" file.txt 		(Displaying non-empty lines)
 10. grep -c "string" file.txt 	(Display count of number of matches)
 11. grep -l "string" * 			(Display file names that matches pattern)
 12. grep -L "string" * 			(Display files which do not contain matched string/pattern)
 13. grep -o "string" file.txt	(Displaying only the matched pattern. By default, grep displays the entire line which has the matched string. We can make the grep to display only the matched string by using the -o option.)
 14. grep -n "string" file.txt	(Display the line number)
-15. grep -o -b "string" file.txt (Display position of matched string in a file. The -b option allows the grep command to display the character position of the matched string in a file.)
-16. grep "^start" file.txt 		(Matching the lines that start with a string, The ^ regular expression pattern specifies the start of a line.)
-17. grep "end$" file.txt 		(Matching the lines that end with a string, The $ regular expression pattern specifies the end of a line.).
+15. grep -o -b "string" file.txt (Display position of matched string in a file. The -b option allows the grep command to display the character position of the matched string in a file)
+16. grep "^start" file.txt 		(Matching the lines that start with a string, The ^ regular expression pattern specifies the start of a line)
+17. grep "end$" file.txt 		(Matching the lines that end with a string, The $ regular expression pattern specifies the end of a line)
